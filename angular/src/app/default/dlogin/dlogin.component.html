@@ -1,0 +1,17 @@
+<form [formGroup]="loginForm" class="form-horizontal">
+<div class="form-group">
+  <label for="email">Introduce tu email</label>
+  <input type="email" class="form-control" id="email" placeholder="example@example.com" formControlName="email"/>
+</div>
+<div class="form-group">
+  <label for="pass">Introduce una contraseña</label>
+  <input type="password" class="form-control" id="pass" placeholder="Contraseña" formControlName="pass"/>
+</div>
+</form>
+<hr />
+<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+  No
+</button>
+<button (click)="login()" style="margin-left: 10px" type="button" class="btn btn-success">
+  Iniciar sesión
+</button>

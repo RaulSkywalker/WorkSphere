@@ -1,0 +1,99 @@
+<h1 class="text-center mb-4" style="font-style: italic">
+  Bienvenido a tu página de WorkSphere, {{ user.name }}
+</h1>
+<hr />
+<div style="display: flex">
+  <div class="col-3" style="float: left">
+    <h3>Tu Departamento:</h3>
+    <div class="info-box mb-3 bg-info">
+      <span class="info-box-icon"><i class="fab fa-elementor"></i></span>
+
+      <div class="info-box-content">
+        <span class="info-box-text text-center" style="font-size: xx-large">{{
+          empleado.nombre_dep
+          }}</span>
+      </div>
+      <!-- /.info-box-content -->
+    </div>
+  </div>
+  <div class="col-lg-3 col-6" style="float: left">
+    <!-- small card -->
+    <div class="small-box bg-warning">
+      <div class="inner">
+        <h3>{{numAmigos}}</h3>
+
+        <p>Tus Amigos de WorkSphere</p>
+      </div>
+      <div class="icon">
+        <i class="fas fa-user-plus"></i>
+      </div>
+      <a [routerLink]="['/empleado/amigos']" class="small-box-footer">
+        Ver amigos <i class="fas fa-arrow-circle-right"></i>
+      </a>
+    </div>
+  </div>
+
+  <div class="col-md-6" style="float: right">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">OTROS USUARIOS DE WorkSphere</h3>
+
+        <div class="card-tools">
+          <ul class="pagination pagination-sm float-right">
+            <li class="page-item"><a class="page-link" href="#">«</a></li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">»</a></li>
+          </ul>
+        </div>
+      </div>
+      <!-- /.card-header -->
+      <div class="card-body p-0">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users">
+              <td>{{ user.name }}</td>
+              <td>
+                <button type="button" (click)="entablarAmistad(id, user.id, user.name)" class="btn btn-default btn-sm"  data-bs-toggle="modal" data-bs-target="#AmigoModal"
+                  [disabled]="esAmigo(user.id)">
+                  <i class="fas fa-plus"></i>
+                </button>
+                <button type="button" class="btn btn-default btn-sm" data-bs-toggle="modal" data-bs-target="#ChatModal">
+                  <i class="fas fa-comment"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div>
+</div>
+
+<!-- Modal agregar amigo-->
+<div class="modal fade" id="AmigoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Entablar nueva amistad</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h2>¿Quieres hacerte amigo de {{nombreAmigo}}?</h2>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+        <button type="button" class="btn btn-danger" (click)="agregarAmigo()">Sí</button>
+      </div>
+    </div>
+  </div>
+</div>

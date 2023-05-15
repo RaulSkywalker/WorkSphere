@@ -1,0 +1,26 @@
+<body>
+    <div class="container-fluid">
+    <!--Top Bar-->
+    <div class="row"><app-dtopbar></app-dtopbar></div>
+    <div class="row col-6 mx-auto">
+        <div><app-dregistration></app-dregistration></div>
+    </div>
+</div>
+
+<!--Login Modal-->
+<div class="modal fade" id="LoginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Inicia sesión con tu cuenta de WorkSphere</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <app-dlogin></app-dlogin>
+      </div>
+                        <div class="modal-footer">
+                        </div>
+    </div>
+  </div>
+</div>
+</body>

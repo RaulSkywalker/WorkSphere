@@ -1,0 +1,55 @@
+<div style="border: 2px solid gray; margin-top: 20px; background-color: white;">
+  <h1 class="text-center">Regístrate si eres un empleado nuevo</h1>
+    <div class="card-body">
+      <form [formGroup]="registerForm" class="form-horizontal">
+                  <div class="form-group">
+                    <label for="name">Introduce tu Nombre</label>
+                    <input type="name" class="form-control" id="name" formControlName="name">
+                  </div>
+                  <div class="form-group">
+                    <label for="name">Introduce tus Apellidos</label>
+                    <input type="name" class="form-control" id="apellido" formControlName="apellido">
+                  </div>
+                  <div class="form-group">
+                    <label for="email">Introduce tu Email</label>
+                    <input type="email" class="form-control" id="email" placeholder="example@example.com" formControlName="email">
+                  </div>
+                  <div class="form-group">
+                    <label for="pass">Introduce una Contraseña</label>
+                    <input type="password" class="form-control" id="pass" placeholder="Contraseña" formControlName="pass">
+                  </div>
+                  <div class="form-group">
+                    <label for="rpass">Repite la Contraseña</label>
+                    <input type="password" class="form-control" id="rpass" placeholder="Repite la contraseña" formControlName="rpass">
+                  </div>
+                  <div class="form-group">
+                    <label for="name">Introduce tu Teléfono</label>
+                    <input type="name" class="form-control" id="telefono" formControlName="telefono">
+                  </div>
+                  <div class="form-group">
+                    <label for="name">Introduce tu Fecha de Nacimiento</label>
+                    <input type="name" class="form-control" id="fecha_nacim" formControlName="fecha_nacim">
+                  </div>
+                  <div class="form-group">
+                    <label for="name">Introduce la Fecha en la que te incorporaste a la Empresa</label>
+                    <input type="name" class="form-control" id="fecha_incorp" formControlName="fecha_incorp">
+                  </div>
+                  <div class="form-group">
+                    <label for="name">Selecciona el Departamento del que formas parte</label>
+                    <select class="form-control" id="id_departamento" formControlName="id_departamento">
+                      <option value="1">Recursos Humanos</option>
+                      <option value="2">Finanzas</option>
+                      <option value="3">Marketing</option>
+                      <option value="4">Operaciones</option>
+                      <option value="5">Informática</option>
+                      <option value="6">Ventas</option>
+                      <option value="7">Legal</option>
+                    </select>
+                  </div>     
+      </form>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary" (click)="registrar()">Registrarme</button>
+                </div>
+</div>

@@ -1,0 +1,154 @@
+<div style="padding: 2%;">
+  <div class="col-md-9">
+    <div class="card card-primary card-outline" style="width: 1200px;">
+      <div class="card-header">
+        <h3 class="card-title">TODOS LOS EMPLEADOS</h3>
+
+        <div class="card-tools">
+          <div class="input-group input-group-sm">
+            <input #inputForSearch (keyup)="buscar(inputForSearch.value)" type="text" class="form-control"
+              placeholder="Buscar Empleado">
+            <div class="input-group-append">
+              <div class="btn btn-primary">
+                <i class="fas fa-search"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.card-tools -->
+      </div>
+      <!-- /.card-header -->
+      <div class="card-body p-0">
+        <div class="table-responsive mailbox-messages">
+          <table class="table table-hover table-striped">
+            <tbody>
+              <tr>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Email</th>
+                <th>Teléfono</th>
+                <th>Fecha de nacimiento</th>
+                <th>Fecha de incorporación</th>
+                <th>Acciones</th>
+              </tr>
+              <tr *ngFor="let e of empleados">
+                <td>{{e.nombre}}</td>
+                <td>{{e.apellido}}</td>
+                <td>{{e.email}}</td>
+                <td>{{e.telefono}}</td>
+                <td>{{e.fecha_nacim}}</td>
+                <td>{{e.fecha_incorp}}</td>
+                <td>
+                  <button type="button" class="btn btn-default btn-sm" data-bs-toggle="modal"
+                    data-bs-target="#DetailsModal" (click)="mostrar(e.id)"><i class="fas fa-eye"></i></button>
+                  <button type="button" class="btn btn-default btn-sm" data-bs-toggle="modal"
+                    data-bs-target="#DeleteModal" (click)="seleccionarEliminar(e.id)"><i
+                      class="fas fa-trash"></i></button>
+                  <button type="button" class="btn btn-default btn-sm" data-bs-toggle="modal"
+                    data-bs-target="#ChatModal" (click)="mostrarChat(e.id)"><i class="fas fa-comment"></i></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- /.table -->
+        </div>
+        <!-- /.mail-box-messages -->
+      </div>
+      <!-- /.card-body -->
+      <div class="card-footer p-0">
+        <button class="btn btn-danger" style="width: 100%;" (click)="generarPDF(empleados)">EXPORTAR LISTADO DE
+          EMPLEADOS A PDF</button>
+        <div class="mailbox-controls">
+          <!-- /.float-right -->
+        </div>
+      </div>
+    </div>
+    <!-- /.card -->
+  </div>
+</div>
+
+<!-- Modal eliminar empleado-->
+<div class="modal fade" id="DeleteModal" tabindex="-1" aria-labelledby="deleteLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Borrando empleado...</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h2>¿Seguro que quieres eliminar a éste empleado del sistema?</h2>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+        <button type="button" class="btn btn-danger" (click)="confirmarBorrado()">Sí</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal mostrar detalles empleado-->
+<div class="modal fade" id="DetailsModal" tabindex="-1" aria-labelledby="detailsModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Datos del empleado</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h6>Nombre del empleado:</h6>
+        <p>{{empleado.nombre}}</p>
+        <h6>Apellidos del empleado:</h6>
+        <p>{{empleado.apellido}}</p>
+        <h6>Email del empleado:</h6>
+        <p>{{empleado.email}}</p>
+        <h6>Teléfono del empleado:</h6>
+        <p>{{empleado.telefono}}</p>
+        <h6>Fecha de nacimiento del empleado:</h6>
+        <p>{{empleado.fecha_nacim}}</p>
+        <h6>Fecha en que el empleado se incorporó a la empresa:</h6>
+        <p>{{empleado.fecha_incorp}}</p>
+        <h6>Departamento al que pertenece el empleado:</h6>
+        <p>{{empleado.nombre_dep}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark">Hablar con {{empleado.nombre}}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Chat-->
+<div class="modal fade" id="ChatModal" tabindex="-1" aria-labelledby="chatModal" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">Chat con {{ empleado.nombre }}&nbsp;{{ empleado.apellido }}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul>
+          <li *ngFor="let mensaje of mensajes">
+            <div class="comentario">
+              <div class="contenido">
+                <p>{{ mensaje.mensaje }}</p>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <div class="form-group">
+          <form class="form-horizontal" [formGroup]="mensajeForm">
+            <label for="mensaje">Escribe un mensaje:</label>
+            <input type="text" class="form-control mensaje" id="mensaje" name="mensaje" formControlName="mensaje">
+            <br>
+            <div class="btnchat">
+              <button type="button" class="btn btn-success" (click)="enviarMensaje()">Enviar Mensaje</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

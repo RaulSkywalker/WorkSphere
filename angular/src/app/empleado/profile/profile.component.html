@@ -1,0 +1,59 @@
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        
+      </div>
+    </div>
+  </div><!-- /.container-fluid -->
+</section>
+<div class="col-md-3">
+  <!-- Profile Image -->
+  <div class="card card-danger card-outline" style="width: 1200px;">
+    <div class="card-body box-profile">
+      <h3 class="profile-username text-center">{{user.name}}</h3>
+
+      <ul class="list-group list-group-unbordered mb-3">
+        <li class="list-group-item">
+          <b>Amigos en WorkSphere:</b> <a class="float-right">0</a>
+        </li>
+        <li class="list-group-item">
+          <b>Usuario de WorkSphere desde:</b> <a class="float-right">{{ fechaFormateada }}</a>
+        </li>
+        <li class="list-group-item" style="display: flex; justify-content: space-between;">
+          <a (click)="logout()" class="nav-link active"
+            style="background-color: rgb(163, 15, 15); width: 150px; border-radius: 30px; padding: 10px; text-align: center; height: 50px; color: white;">
+            <p>Cerrar sesión</p>
+          </a>
+
+          <a class="nav-link active" style="float:right" data-bs-toggle="modal" data-bs-target="#DeleteModal"
+            style="background-color: rgb(255, 204, 0); width: 150px; border-radius: 30px; padding: 10px; text-align: center; height: 50px;">
+            <p>Borrar mi cuenta</p>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <!-- /.card-body -->
+  </div>
+  <!-- /.card -->
+  <!-- /.card -->
+</div>
+
+<!-- Modal eliminar empleado-->
+<div class="modal fade" id="DeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Borrar tu cuenta</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h2>¿Seguro que quieres eliminar tu cuenta de WorkSphere?</h2>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+        <button type="button" class="btn btn-danger" (click)="deleteAccount()">Sí</button>
+      </div>
+    </div>
+  </div>
+</div>
