@@ -127,7 +127,7 @@
       </div>
       <div class="modal-body">
         <ul>
-          <li *ngFor="let mensaje of mensajes" [ngClass]="{'admin': mensaje.id_autor.toString() === '1'}">
+          <li *ngFor="let mensaje of mensajes" [ngClass]="{'admin': mensaje.id_autor.toString() === '1', 'notAdmin': mensaje.id_autor.toString() !== '1'}">
             <div class="mensaje">
               <div class="contenido">
                 <p>{{ mensaje.mensaje }}</p>

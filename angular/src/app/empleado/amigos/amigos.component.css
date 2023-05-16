@@ -1,0 +1,37 @@
+.mensaje {width: 100%;}
+
+.btnchat{
+width: 100%;}
+
+ul {
+  list-style: none;
+}
+
+.contenido {
+  background-color: #afabab;
+  padding: 10px;
+  margin-right: 0;
+  border-radius: 5px;
+  max-width: 800px;
+  word-wrap: break-word;
+  text-align: justify;
+}
+
+.me{
+  float: right;
+  text-align: right;
+  clear: both;
+  margin: 10px;
+}
+
+.notMe {
+  float: left;
+  text-align: left;
+  clear: both;
+  margin: 10px;
+}
+
+.fecha-hora {
+  font-size: 12px;
+  color: #999;
+}

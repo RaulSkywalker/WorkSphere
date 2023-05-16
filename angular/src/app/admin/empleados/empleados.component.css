@@ -24,6 +24,13 @@ ul {
   margin: 10px;
 }
 
+.notAdmin{
+  float: left;
+  text-align: left;
+  clear: both;
+  margin: 10px;
+}
+
 .fecha-hora {
   font-size: 12px;
   color: #999;

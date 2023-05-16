@@ -65,7 +65,7 @@
                   [disabled]="esAmigo(user.id)">
                   <i class="fas fa-plus"></i>
                 </button>
-                <button type="button" class="btn btn-default btn-sm" data-bs-toggle="modal" data-bs-target="#ChatModal">
+                <button type="button" class="btn btn-default btn-sm" data-bs-toggle="modal" data-bs-target="#ChatModal" (click)="mostrarChat(user.id)">
                   <i class="fas fa-comment"></i>
                 </button>
               </td>
@@ -93,6 +93,42 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
         <button type="button" class="btn btn-danger" (click)="agregarAmigo()">Sí</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Chat-->
+<div class="modal fade" id="ChatModal" tabindex="-1" aria-labelledby="chatModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">Chat con {{ user.name }}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul>
+          <li *ngFor="let mensaje of mensajes" [ngClass]="{'me': mensaje.id_autor.toString() === id.toString(), 'notMe': mensaje.id_autor.toString() !== id.toString()}">
+            <div class="mensaje">
+              <div class="contenido">
+                <p>{{ mensaje.mensaje }}</p>
+              </div>
+              <div class="fecha-hora">{{ mensaje.fecha_mensaje }} {{ mensaje.hora_mensaje }}</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <div class="form-group mensaje">
+          <form class="form-horizontal" [formGroup]="mensajeForm">
+            <label for="mensaje">Escribe un mensaje:</label>
+            <input type="text" class="form-control" id="mensaje" name="mensaje" formControlName="mensaje">
+            <br>
+            <div>
+              <button type="button" class="btn btn-success btnchat" (click)="enviarMensaje()">Enviar Mensaje</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>

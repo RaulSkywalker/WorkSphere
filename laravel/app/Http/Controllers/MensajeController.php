@@ -20,10 +20,17 @@ class MensajeController extends Controller
 
     public function obtenerMensajes($id_autor, $id_usuario) {
     $mensajes = DB::table('mensajes')
-                ->where('id_autor', $id_autor)
-                ->where('id_usuario', $id_usuario)
+                ->where(function($query) use ($id_autor, $id_usuario) {
+                    $query->where('id_autor', $id_autor)
+                          ->where('id_usuario', $id_usuario);
+                })
+                ->orWhere(function($query) use ($id_autor, $id_usuario) {
+                    $query->where('id_autor', $id_usuario)
+                          ->where('id_usuario', $id_autor);
+                })
                 ->get();
     return response()->json($mensajes);
 }
+
 
 }

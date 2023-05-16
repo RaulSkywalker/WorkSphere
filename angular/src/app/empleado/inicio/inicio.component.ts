@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { userModel } from 'src/app/models/user.model';
+import { MensajeService } from 'src/app/services/mensaje.service';
 import { UserService } from 'src/app/services/user.service';
 
 
@@ -22,13 +24,21 @@ export class InicioComponent implements OnInit {
   idAmistad: any;
   idAmigoNuevo: any;
   nombreAmigo: any;
+  mensajeForm: FormGroup;
+  id_receptor: any;
+  mensajes: any = [];
   private baseUrl = 'http://localhost:8000/api/';
   constructor(
     private router: Router,
     private userSer: UserService,
+    private menSer: MensajeService,
     private http: HttpClient,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {
+    this.mensajeForm = new FormGroup({
+      mensaje: new FormControl(),
+    });
+  }
   ngOnInit(): void {
     this.id = localStorage.getItem('userid');
     this.userSer.getUser(this.id).subscribe((data: any) => {
@@ -74,8 +84,7 @@ export class InicioComponent implements OnInit {
     document.getElementById('AmigoModal')?.classList.remove('show');
     document.body.classList.remove('modal-open');
     document.body.style.removeProperty('padding-right');
-    const modalBackdrop =
-      document.getElementsByClassName('modal-backdrop')[0];
+    const modalBackdrop = document.getElementsByClassName('modal-backdrop')[0];
     modalBackdrop.parentNode?.removeChild(modalBackdrop);
 
     toastr.success('Amistad entablada exitosamente');
@@ -83,7 +92,7 @@ export class InicioComponent implements OnInit {
     (error: any) => {
       console.log(error);
       toastr.error('Error al entablar la amistad');
-    }
+    };
     this.ngOnInit();
   }
 
@@ -106,5 +115,39 @@ export class InicioComponent implements OnInit {
     });
 
     this.cdr.detectChanges();
+  }
+
+  mostrarChat(id_usuario: number) {
+    this.id_receptor = id_usuario;
+    this.http
+      .get(`${this.baseUrl}user/${id_usuario}`)
+      .subscribe((data: any) => {
+        this.user = data;
+      });
+    this.obtenerMensajes(this.id, this.id_receptor);
+    this.cdr.detectChanges();
+  }
+
+  enviarMensaje() {
+    const mensaje = this.mensajeForm.value.mensaje;
+    const autor = this.id;
+    const usuario = this.id_receptor;
+    const url = `http://localhost:8000/api/addMensaje/${autor}/${usuario}`;
+
+    this.http.post(url, { mensaje }).subscribe(() => {
+      this.obtenerMensajes(autor, usuario);
+      this.cdr.detectChanges();
+    });
+    this.mensajeForm.reset();
+    this.cdr.detectChanges();
+  }
+
+  obtenerMensajes(id_autor: any, id_usuario: any) {
+    id_autor = this.id;
+    id_usuario = this.id_receptor;
+    this.menSer.obtenerMensajes(id_autor, id_usuario).subscribe((data: any) => {
+      this.mensajes = data;
+      this.cdr.detectChanges();
+    });
   }
 }
