@@ -6,13 +6,13 @@ import { userModel } from 'src/app/models/user.model';
 import { MensajeService } from 'src/app/services/mensaje.service';
 import { UserService } from 'src/app/services/user.service';
 
-
 @Component({
   selector: 'app-inicio',
   templateUrl: './inicio.component.html',
   styleUrls: ['./inicio.component.css'],
 })
 export class InicioComponent implements OnInit {
+  private baseUrl = 'http://localhost:8000/api/';
   user: any = {};
   id: any;
   name: string = '';
@@ -27,7 +27,10 @@ export class InicioComponent implements OnInit {
   mensajeForm: FormGroup;
   id_receptor: any;
   mensajes: any = [];
-  private baseUrl = 'http://localhost:8000/api/';
+  currentPage = 1;
+  pageSize = 5;
+  totalPages: any;
+
   constructor(
     private router: Router,
     private userSer: UserService,
@@ -60,6 +63,8 @@ export class InicioComponent implements OnInit {
 
     this.userSer.mostrarUsuarios(this.id).subscribe((data: any) => {
       this.users = data;
+      this.totalPages = Math.ceil(this.users.length / this.pageSize);
+      this.paginateUsers();
     });
 
     this.userSer.contarNumAmigos(this.id).subscribe((res: any) => {
@@ -149,5 +154,24 @@ export class InicioComponent implements OnInit {
       this.mensajes = data;
       this.cdr.detectChanges();
     });
+  }
+
+  generatePageArray() {
+    const pageArray = [];
+    for (let i = 1; i <= this.totalPages; i++) {
+      pageArray.push(i);
+    }
+    return pageArray;
+  }
+
+  paginateUsers(): void {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.users = this.users.slice(startIndex, endIndex);
+  }
+
+  onPageChange(pageNumber: number): void {
+    this.currentPage = pageNumber;
+    this.paginateUsers();
   }
 }

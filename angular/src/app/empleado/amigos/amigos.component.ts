@@ -92,5 +92,5 @@ export class AmigosComponent implements OnInit {
       this.mensajes = data;
       this.cdr.detectChanges();
     });
-  }
+  } 
 }

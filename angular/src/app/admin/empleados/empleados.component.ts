@@ -21,6 +21,7 @@ import { MensajeService } from 'src/app/services/mensaje.service';
   styleUrls: ['./empleados.component.css'],
 })
 export class EmpleadosComponent implements OnInit {
+  private baseUrl = 'http://localhost:8000/api/';
   id: any;
   empleados: empleadoModel[] = [];
   departamentos: departamentoModel[] = [];
@@ -34,7 +35,9 @@ export class EmpleadosComponent implements OnInit {
   id_receptor: any;
   empleado: any = {};
   mensajes: any = [];
-  private baseUrl = 'http://localhost:8000/api/';
+  currentPage = 1;
+  pageSize = 5;
+  totalPages: any;
 
   constructor(
     private empSer: EmpleadoService,
@@ -42,7 +45,7 @@ export class EmpleadosComponent implements OnInit {
     private menSer: MensajeService,
     private fb: FormBuilder,
     private http: HttpClient,
-    private cdr: ChangeDetectorRef,
+    private cdr: ChangeDetectorRef
   ) {
     this.idModificar = 0;
     this.anadirForm = new FormGroup({
@@ -73,6 +76,8 @@ export class EmpleadosComponent implements OnInit {
   ngOnInit(): void {
     this.empSer.empleados.subscribe((res) => {
       this.empleados = res;
+      this.totalPages = Math.ceil(this.empleados.length / this.pageSize);
+      this.paginateEmployees();
     });
     this.id = localStorage.getItem('userid');
   }
@@ -272,15 +277,17 @@ export class EmpleadosComponent implements OnInit {
   }
 
   mostrarChat(id_usuario: number) {
-    this.id_receptor = id_usuario+1;
-    this.http.get(`${this.baseUrl}empleado/${id_usuario}`).subscribe((data: any) => {
-      this.empleado = data;
-    });
+    this.id_receptor = id_usuario + 1;
+    this.http
+      .get(`${this.baseUrl}empleado/${id_usuario}`)
+      .subscribe((data: any) => {
+        this.empleado = data;
+      });
     this.obtenerMensajes(this.id, this.id_receptor);
     this.cdr.detectChanges();
   }
 
-   enviarMensaje() {
+  enviarMensaje() {
     const mensaje = this.mensajeForm.value.mensaje;
     const autor = this.id;
     const usuario = this.id_receptor;
@@ -289,9 +296,9 @@ export class EmpleadosComponent implements OnInit {
     this.http.post(url, { mensaje }).subscribe(() => {
       this.obtenerMensajes(autor, usuario);
       this.cdr.detectChanges();
-      });
-     this.mensajeForm.reset();
-     this.cdr.detectChanges();
+    });
+    this.mensajeForm.reset();
+    this.cdr.detectChanges();
   }
 
   obtenerMensajes(id_autor: any, id_usuario: any) {
@@ -301,5 +308,24 @@ export class EmpleadosComponent implements OnInit {
       this.mensajes = data;
       this.cdr.detectChanges();
     });
+  }
+
+  generatePageArray() {
+    const pageArray = [];
+    for (let i = 1; i <= this.totalPages; i++) {
+      pageArray.push(i);
+    }
+    return pageArray;
+  }
+
+  paginateEmployees(): void {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.empleados = this.empleados.slice(startIndex, endIndex);
+  }
+
+  onPageChange(pageNumber: number): void {
+    this.currentPage = pageNumber;
+    this.paginateEmployees();
   }
 }
