@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Empleado;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -66,6 +67,7 @@ class EmpleadoController extends Controller
             return response()->json(['Error'=>$validator->errors()->all()], 404);
         }
         $empleado = Empleado::find($request->id)->delete();
+        $user = User::find($request->id+1)->delete();
         return response()->json(['Mensaje'=>'Empleado eliminado correctamente']);
     }
 
