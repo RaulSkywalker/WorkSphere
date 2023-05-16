@@ -287,9 +287,11 @@ export class EmpleadosComponent implements OnInit {
     const url = `http://localhost:8000/api/addMensaje/${autor}/${usuario}`;
 
     this.http.post(url, { mensaje }).subscribe(() => {
-      
+      this.obtenerMensajes(autor, usuario);
+      this.cdr.detectChanges();
       });
-    this.mensajeForm.reset();
+     this.mensajeForm.reset();
+     this.cdr.detectChanges();
   }
 
   obtenerMensajes(id_autor: any, id_usuario: any) {

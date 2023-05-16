@@ -119,7 +119,7 @@
 
 <!-- Modal Chat-->
 <div class="modal fade" id="ChatModal" tabindex="-1" aria-labelledby="chatModal" aria-hidden="true">
-  <div class="modal-dialog modal-xl">
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5">Chat con {{ empleado.nombre }}&nbsp;{{ empleado.apellido }}</h1>
@@ -127,24 +127,24 @@
       </div>
       <div class="modal-body">
         <ul>
-          <li *ngFor="let mensaje of mensajes">
-            <div class="comentario">
+          <li *ngFor="let mensaje of mensajes" [ngClass]="{'admin': mensaje.id_autor.toString() === '1'}">
+            <div class="mensaje">
               <div class="contenido">
                 <p>{{ mensaje.mensaje }}</p>
               </div>
+              <div class="fecha-hora">{{ mensaje.fecha_mensaje }} {{ mensaje.hora_mensaje }}</div>
             </div>
           </li>
         </ul>
       </div>
       <div class="modal-footer">
-        <div class="form-group">
+        <div class="form-group mensaje">
           <form class="form-horizontal" [formGroup]="mensajeForm">
             <label for="mensaje">Escribe un mensaje:</label>
-            <input type="text" class="form-control mensaje" id="mensaje" name="mensaje" formControlName="mensaje">
+            <input type="text" class="form-control" id="mensaje" name="mensaje" formControlName="mensaje">
             <br>
-            <div class="btnchat">
-              <button type="button" class="btn btn-success" (click)="enviarMensaje()">Enviar Mensaje</button>
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            <div>
+              <button type="button" class="btn btn-success btnchat" (click)="enviarMensaje()">Enviar Mensaje</button>
             </div>
           </form>
         </div>
