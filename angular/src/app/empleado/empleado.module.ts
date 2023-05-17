@@ -12,6 +12,7 @@ import { AmigosComponent } from './amigos/amigos.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
 
+
 @NgModule({
   declarations: [
     EmpleadoComponent,
@@ -22,6 +23,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     FooterComponent,
     AmigosComponent,
   ],
-  imports: [CommonModule, EmpleadoRoutingModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    EmpleadoRoutingModule,
+    ReactiveFormsModule,
+  ],
 })
 export class EmpleadoModule {}

@@ -1,0 +1,14 @@
+.row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+hr {
+  border-color: red;
+  border-width: 1px;
+  margin: 20px 0;
+  height: 1px;
+  background-color: red;
+}
+

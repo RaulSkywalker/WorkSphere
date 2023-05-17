@@ -8,8 +8,6 @@ import { DrightsidebarComponent } from './drightsidebar/drightsidebar.component'
 import { DregistrationComponent } from './dregistration/dregistration.component';
 import { DloginComponent } from './dlogin/dlogin.component';
 import { DtopbarComponent } from './dtopbar/dtopbar.component';
-import { AboutComponent } from './about/about.component';
-import { ContactComponent } from './contact/contact.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
@@ -19,9 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     DrightsidebarComponent,
     DregistrationComponent,
     DloginComponent,
-    DtopbarComponent,
-    AboutComponent,
-    ContactComponent,
+    DtopbarComponent
   ],
   imports: [CommonModule, DefaultRoutingModule, ReactiveFormsModule],
 })
