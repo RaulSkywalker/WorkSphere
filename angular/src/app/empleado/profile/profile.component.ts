@@ -11,6 +11,7 @@ import * as moment from 'moment';
 export class ProfileComponent implements OnInit {
   user: any = {};
   id: any;
+  numAmigos: any;
   fechaFormateada: any;
   constructor(private router: Router, private userSer: UserService) {}
   ngOnInit(): void {
@@ -21,6 +22,10 @@ export class ProfileComponent implements OnInit {
       const formatoFechaHora = 'YYYY-MM-DD HH:mm:ss';
       const fechaMoment = moment(fechaBaseDatos, 'YYYY-MM-DD HH:mm:ss');
       this.fechaFormateada = fechaMoment.format(formatoFechaHora);
+    });
+
+    this.userSer.contarNumAmigos(this.id).subscribe((res: any) => {
+      this.numAmigos = res;
     });
   }
 

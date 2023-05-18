@@ -16,6 +16,7 @@ import toastr from 'toastr';
 })
 export class DregistrationComponent {
   registerForm: FormGroup;
+  selectedImage: File = null;
 
   constructor(private userSer: UserService, private fb: FormBuilder, private router: Router) {
     this.registerForm = new FormGroup({
@@ -47,9 +48,16 @@ export class DregistrationComponent {
       formdata.append('fecha_nacim', this.registerForm.get('fecha_nacim')?.value);
       formdata.append('fecha_incorp', this.registerForm.get('fecha_incorp')?.value);
       formdata.append('id_departamento', this.registerForm.get('id_departamento')?.value);
+      formdata.append('image', this.selectedImage);
       this.userSer.register(formdata).subscribe((res) => {
         toastr.success('Registrado con éxito');
       });
     }
+  }
+
+  onSelectImage(event) {
+    var temppath = URL.createObjectURL(event.target.files[0]);
+    $("#AddUserImage").fadeIn("fast").attr("src", temppath);
+    this.selectedImage=<File>event.target.files[0];
   }
 }

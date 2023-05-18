@@ -19,6 +19,7 @@ class UserController extends Controller
             'password' => 'required',
             'name' => 'required',
             'role',
+            'image' => 'image'
         ]);
         if ($validator->fails()) {
             return response()->json(['Error' => $validator->errors()->all()], 404);
@@ -28,6 +29,14 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->role = 'empleado';
+        $user->save();
+
+        $url="http://localhost:8000/storage/";
+        $file=$request->file('image');
+        $extension = $file->getClientOriginalExtension();
+        $path = $request->file('image')->storeAs('userimages/',$user->id.'.'.$extension);
+        $user->image=$path;
+        $user->imgpath=$url.$path;
         $user->save();
 
         $empleado = new Empleado();

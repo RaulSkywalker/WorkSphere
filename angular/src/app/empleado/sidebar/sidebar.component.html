@@ -10,7 +10,10 @@
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <li class="nav-item">
-          <a class="nav-link active" style="background-color: rgb(224, 130, 42); width: 150px; border-radius: 30px; padding: 10px; margin: 10px; text-align: center; height: 50px; color: white; font-weight: bolder;">
+          <a class="nav-link active" style="background-color: rgb(224, 130, 42); width: 200px; border-radius: 30px; padding: 10px; margin: 10px; text-align: center; height: 65px; color: white; font-weight: bolder;">
+            <div class="image" style="margin-right: 10px;">
+          <img src="{{user.imgpath}}" class="img-circle elevation-2" alt="User Image" style="width: 45px; height: 45px;">
+        </div>
           <p>{{user.name}}</p>
         </a>
         <a [routerLink]="['/empleado/profile']" class="nav-link active" style="background-color: green;">

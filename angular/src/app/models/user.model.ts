@@ -4,5 +4,7 @@ export class userModel {
   email: any = '';
   password: any = '';
   role: any = "";
+  image: any = "";
+  imgpath: any = "";
   created_at: any = "";
 }

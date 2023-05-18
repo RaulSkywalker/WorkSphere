@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('password');
             $table->string('role');
             $table->integer('num_amigos')->default(0);
+            $table->string('image')->nullable();
+            $table->string('imgpath')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
