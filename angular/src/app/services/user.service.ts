@@ -32,6 +32,10 @@ export class UserService {
     return this.http.get(this.baseUrl + 'user/' + id);
   }
 
+  public updateUser(form: any) {
+    return this.http.post(this.baseUrl + 'updateUser', form);
+  }
+
   public deleteUser(id: any) {
     return this.http.delete(this.baseUrl + 'deleteUser?id=' + id);
   }

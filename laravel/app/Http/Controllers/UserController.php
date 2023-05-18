@@ -76,6 +76,33 @@ class UserController extends Controller
         return response()->json($user);
     }
 
+    public function updateUser(Request $request)
+    {
+        $validator=Validator::make($request->all(),[
+            'id'=>'required',
+            'name'=>'required',
+            'image' => 'image'
+        ]);
+        if($validator->fails()){
+            return response()->json(['Error'=>$validator->errors()->all()], 404);
+        }
+        $user = User::find($request->id);
+        $user->name=$request->name;
+        $user->save();
+
+         if ($request->hasFile('image')) {
+        $url = "http://localhost:8000/storage/";
+        $file = $request->file('image');
+        $extension = $file->getClientOriginalExtension();
+        $path = $request->file('image')->storeAs('userimages/', $user->id . '.' . $extension);
+        $user->image = $path;
+        $user->imgpath = $url . $path;
+        $user->save();
+    }
+        
+        return response()->json(['Mensaje'=>'Usuario actualizado correctamente']);
+    }
+
     public function deleteUser(Request $request)
     {
         $validator = Validator::make($request->all(), [

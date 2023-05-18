@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        
+
       </div>
     </div>
   </div><!-- /.container-fluid -->
@@ -11,9 +11,9 @@
   <!-- Profile Image -->
   <div class="card card-danger card-outline" style="width: 1440px;">
     <div class="card-body box-profile">
-       <div class="text-center">
-                  <img class="profile-user-img img-fluid img-circle" src="{{user.imgpath}}" alt="User profile picture">
-                </div>
+      <div class="text-center">
+        <img class="profile-user-img img-fluid img-circle" src="{{user.imgpath}}" alt="User profile picture">
+      </div>
       <h3 class="profile-username text-center">{{user.name}}</h3>
 
       <ul class="list-group list-group-unbordered mb-3">
@@ -45,6 +45,41 @@
   </div>
   <!-- /.card -->
   <!-- /.card -->
+</div>
+
+<!-- Modal Update User-->
+<div class="modal fade" id="UpdateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modificar información de usuario</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="updateForm" class="form-horizontal">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-3">
+              <img class="img-thumbnail" id="AddUserImage" style="width: 100px; height: 100px;"
+                src="{{user.imgpath}}">
+            </div>
+            <div class="col-md-9">
+              <input id="image" type="file" style="margin-left: 10px;" (change)="onSelectImage($event)" accept="image/*"
+                placeholder="Seleccione una imagen">
+            </div>
+          </div>
+          <br>
+          <label>Nombre de usuario:</label>
+          <div class="row"><input type="text" id="uname" class="form-control" formControlName="uname" placeholder="{{user.name}}"></div>
+        </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+        <button type="button" class="btn btn-danger" (click)="updateUser()">Sí</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- Modal eliminar usuario-->
