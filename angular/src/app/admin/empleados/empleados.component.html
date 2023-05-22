@@ -118,7 +118,8 @@
         <p>{{empleado.nombre_dep}}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-dark">Hablar con {{empleado.nombre}}</button>
+        <button type="button" class="btn btn-dark" data-bs-toggle="modal"
+                    data-bs-target="#ChatModal" (click)="mostrarChat(empleado.id)">Hablar con {{empleado.nombre}}</button>
       </div>
     </div>
   </div>
