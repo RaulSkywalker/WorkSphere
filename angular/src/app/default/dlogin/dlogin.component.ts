@@ -24,19 +24,23 @@ export class DloginComponent {
     });
   }
   login() {
+    if (this.loginForm.valid) {
       const formdata = new FormData();
-    formdata.append('email', this.loginForm.get('email')?.value);
-    formdata.append('password', this.loginForm.get('pass')?.value);
-    if (this.userSer.login(formdata)) {
-      setTimeout(() => {
-        document.getElementById('LoginModal')?.classList.remove('show');
-        document.body.classList.remove('modal-open');
-        document.body.style.removeProperty('padding-right');
-        const modalBackdrop =
-          document.getElementsByClassName('modal-backdrop')[0];
-        modalBackdrop.parentNode?.removeChild(modalBackdrop);
-      
-      }, 1000);
+      formdata.append('email', this.loginForm.get('email')?.value);
+      formdata.append('password', this.loginForm.get('pass')?.value);
+      if (this.userSer.login(formdata)) {
+        setTimeout(() => {
+          document.getElementById('LoginModal')?.classList.remove('show');
+          document.body.classList.remove('modal-open');
+          document.body.style.removeProperty('padding-right');
+          const modalBackdrop =
+            document.getElementsByClassName('modal-backdrop')[0];
+          modalBackdrop.parentNode?.removeChild(modalBackdrop);
+        }, 1000);
+      }
+    }
+    else {
+      toastr.error('Debes introducir tus datos para poder iniciar sesión.');
     }
   }
 }

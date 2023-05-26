@@ -1,12 +1,24 @@
 <form [formGroup]="loginForm" class="form-horizontal">
-<div class="form-group">
-  <label for="email">Introduce tu email</label>
-  <input type="email" class="form-control" id="email" placeholder="example@example.com" formControlName="email"/>
-</div>
-<div class="form-group">
-  <label for="pass">Introduce una contraseña</label>
-  <input type="password" class="form-control" id="pass" placeholder="Contraseña" formControlName="pass"/>
-</div>
+  <div class="form-group">
+    <label for="email">Introduce tu email</label>
+    <span class="required-indicator" style="color: red;">*</span>
+
+    <input type="email" class="form-control" id="email" placeholder="example@example.com" formControlName="email" />
+    <div *ngIf="loginForm.get('email').invalid && (loginForm.get('email').dirty || loginForm.get('email').touched)">
+      <div *ngIf="loginForm.get('email').errors['required']">El email es requerido.</div>
+      <div *ngIf="loginForm.get('email').errors['email']">El email no es válido.</div>
+
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="pass">Introduce una contraseña</label>
+    <span class="required-indicator" style="color: red;">*</span>
+
+    <input type="password" class="form-control" id="pass" placeholder="Contraseña" formControlName="pass" />
+    <div *ngIf="loginForm.get('pass').invalid && (loginForm.get('pass').dirty || loginForm.get('pass').touched)">
+      <div *ngIf="loginForm.get('pass').errors['required']">La contraseña es requerida.</div>
+    </div>
+  </div>
 </form>
 <hr />
 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">

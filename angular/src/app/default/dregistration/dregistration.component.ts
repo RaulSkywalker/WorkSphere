@@ -20,15 +20,15 @@ export class DregistrationComponent {
 
   constructor(private userSer: UserService, private fb: FormBuilder, private router: Router) {
     this.registerForm = new FormGroup({
-      name: new FormControl(''),
-      apellido: new FormControl(''),
+      name: new FormControl('', Validators.required),
+      apellido: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, Validators.email]),
-      pass: new FormControl(''),
-      rpass: new FormControl(''),
-      telefono: new FormControl(''),
-      fecha_nacim: new FormControl(''),
-      fecha_incorp: new FormControl(''),
-      id_departamento: new FormControl(''),
+      pass: new FormControl('', Validators.required),
+      rpass: new FormControl('', Validators.required),
+      telefono: new FormControl('', Validators.required),
+      fecha_nacim: new FormControl('', Validators.required),
+      fecha_incorp: new FormControl('', Validators.required),
+      id_departamento: new FormControl('', Validators.required),
     });
   }
 
@@ -39,19 +39,39 @@ export class DregistrationComponent {
     ) {
       toastr.error('Las contraseñas no coinciden');
     } else {
-      const formdata = new FormData();
-      formdata.append('name', this.registerForm.get('name')?.value);
-      formdata.append('apellido', this.registerForm.get('apellido')?.value);
-      formdata.append('email', this.registerForm.get('email')?.value);
-      formdata.append('password', this.registerForm.get('pass')?.value);
-      formdata.append('telefono', this.registerForm.get('telefono')?.value);
-      formdata.append('fecha_nacim', this.registerForm.get('fecha_nacim')?.value);
-      formdata.append('fecha_incorp', this.registerForm.get('fecha_incorp')?.value);
-      formdata.append('id_departamento', this.registerForm.get('id_departamento')?.value);
-      formdata.append('image', this.selectedImage);
-      this.userSer.register(formdata).subscribe((res) => {
-        toastr.success('Registrado con éxito');
-      });
+      if (this.registerForm.valid) {
+        const formdata = new FormData();
+        formdata.append('name', this.registerForm.get('name')?.value);
+        formdata.append('apellido', this.registerForm.get('apellido')?.value);
+        formdata.append('email', this.registerForm.get('email')?.value);
+        formdata.append('password', this.registerForm.get('pass')?.value);
+        formdata.append('telefono', this.registerForm.get('telefono')?.value);
+        formdata.append(
+          'fecha_nacim',
+          this.registerForm.get('fecha_nacim')?.value
+        );
+        formdata.append(
+          'fecha_incorp',
+          this.registerForm.get('fecha_incorp')?.value
+        );
+        formdata.append(
+          'id_departamento',
+          this.registerForm.get('id_departamento')?.value
+        );
+        formdata.append('image', this.selectedImage);
+        this.userSer.register(formdata).subscribe((res) => {
+          toastr.success('Registrado con éxito');
+          document.getElementById('RegisterModal')?.classList.remove('show');
+          document.body.classList.remove('modal-open');
+          document.body.style.removeProperty('padding-right');
+          const modalBackdrop =
+          document.getElementsByClassName('modal-backdrop')[0];
+          modalBackdrop.parentNode?.removeChild(modalBackdrop);
+        }); 
+      }
+      else {
+        toastr.error('Debes rellenar todos los campos.');
+      }
     }
   }
 
