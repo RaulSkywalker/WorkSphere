@@ -4,7 +4,6 @@
       <div class="card-header">
         <h3 class="card-title">DEPARTAMENTOS DE LA EMPRESA</h3>
       </div>
-      <!-- /.card-header -->
       <div class="card-body p-0">
         <div class="table-responsive mailbox-messages">
           <table class="table table-hover table-striped">
@@ -18,39 +17,24 @@
               <tr *ngFor="let d of departamentos">
                 <td>{{ d.nombre_departamento }}</td>
                 <td>
-                  <button
-                    type="button"
-                    class="btn btn-success btn-sm"
-                    data-bs-toggle="modal"
-                    data-bs-target="#DetailsModal"
-                    (click)="mostrar(d.id)"
-                  >Consultar departamento</button>
+                  <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
+                    data-bs-target="#DetailsModal" (click)="mostrar(d.id)">Consultar departamento</button>
                 </td>
               </tr>
             </tbody>
           </table>
-          <!-- /.table -->
         </div>
-        <!-- /.mail-box-messages -->
       </div>
-      <!-- /.card-body -->
       <div class="card-footer p-0">
         <div class="mailbox-controls">
-          <!-- /.float-right -->
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Modal mostrar departamento-->
-<div
-  class="modal fade"
-  id="DetailsModal"
-  tabindex="-1"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
+<!-- Modal para mostrar detalles del departamento-->
+<div class="modal fade" id="DetailsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -60,20 +44,16 @@
         <h2 class="modal-title fs-5" id="exampleModalLabel">
           {{ departamento.descripcion_departamento }}
         </h2>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <p>{{ departamento.descripcion }}</p>
-        <h6>Gerente del departamento: </h6><p>{{ departamento.gerente_nombre }}</p>
+        <h6>Gerente del departamento: </h6>
+        <p>{{ departamento.gerente_nombre }}</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-success" (click)="asignarGerente(departamento.id)" data-bs-toggle="modal"
-                    data-bs-target="#GerenteModal">
+          data-bs-target="#GerenteModal">
           Asignar gerente a éste departamento
         </button>
       </div>
@@ -81,7 +61,7 @@
   </div>
 </div>
 
-<!-- Modal asignación gerente-->
+<!-- Modal de asignación de nuevo gerente-->
 <div class="modal fade" id="GerenteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">

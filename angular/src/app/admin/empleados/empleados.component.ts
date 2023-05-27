@@ -1,15 +1,9 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import {
-  FormGroup,
-  FormControl,
-  Validators,
-  FormBuilder,
-} from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { departamentoModel } from 'src/app/models/departamento.model';
 import { empleadoModel } from 'src/app/models/empleado.model';
 import { EmpleadoService } from 'src/app/services/empleado.service';
 import { DepartamentoService } from 'src/app/services/departamento.service';
-
 import toastr from 'toastr';
 import jsPDF from 'jspdf';
 import { HttpClient } from '@angular/common/http';
@@ -25,9 +19,7 @@ export class EmpleadosComponent implements OnInit {
   id: any;
   empleados: empleadoModel[] = [];
   departamentos: departamentoModel[] = [];
-  anadirForm: FormGroup;
-  modificarForm: FormGroup;
-  idModificar: any;
+  idEliminar: any;
   empleadoModificando: empleadoModel = new empleadoModel();
   empleadoSeleccionado: any = null;
   departamentoSeleccionado: any = {};
@@ -35,39 +27,18 @@ export class EmpleadosComponent implements OnInit {
   id_receptor: any;
   empleado: any = {};
   mensajes: any = [];
-  currentPage = 1;
-  pageSize = 5;
-  totalPages: any;
+  paginaActual = 1;
+  tamanioPag = 5;
+  paginasTotales: any;
 
   constructor(
     private empSer: EmpleadoService,
     private deptSer: DepartamentoService,
     private menSer: MensajeService,
-    private fb: FormBuilder,
     private http: HttpClient,
     private cdr: ChangeDetectorRef
   ) {
-    this.idModificar = 0;
-    this.anadirForm = new FormGroup({
-      nombre: new FormControl('', Validators.required),
-      apellido: new FormControl(''),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      telefono: new FormControl(''),
-      fecha_nacim: new FormControl(''),
-      fecha_incorp: new FormControl(''),
-      departamento: new FormControl(''),
-    });
-
-    this.modificarForm = this.fb.group({
-      unombre: ['', Validators.required],
-      uapellido: ['', Validators.required],
-      uemail: ['', [Validators.required, Validators.email]],
-      utelefono: ['', [Validators.required, Validators.pattern('[0-9]{9}')]],
-      ufecha_nacim: [''],
-      ufecha_incorp: [''],
-      udepartamento: ['', Validators.required],
-    });
-
+    this.idEliminar = 0;
     this.mensajeForm = new FormGroup({
       mensaje: new FormControl(),
     });
@@ -76,112 +47,52 @@ export class EmpleadosComponent implements OnInit {
   ngOnInit(): void {
     this.empSer.empleados.subscribe((res) => {
       this.empleados = res;
-      this.totalPages = Math.ceil(this.empleados.length / this.pageSize);
-      this.paginateEmployees();
+      this.paginasTotales = Math.ceil(this.empleados.length / this.tamanioPag);
+      this.paginarEmpleados();
     });
     this.id = localStorage.getItem('userid');
   }
 
+  /**
+   * Este método se aplica a la barra de búsqueda para buscar por nombre de empleado.
+   * @param input
+   */
   buscar(input: any) {
     this.empSer.getEmpleados(input);
   }
 
-  anadir() {
-    const formdata = new FormData();
-    formdata.append('nombre', this.anadirForm.get('nombre')?.value);
-    formdata.append('apellido', this.anadirForm.get('apellido')?.value);
-    formdata.append('email', this.anadirForm.get('email')?.value);
-    formdata.append('telefono', this.anadirForm.get('telefono')?.value);
-    formdata.append('fecha_nacim', this.anadirForm.get('fecha_nacim')?.value);
-    formdata.append('fecha_incorp', this.anadirForm.get('fecha_incorp')?.value);
-    formdata.append(
-      'id_departamento',
-      this.anadirForm.get('departamento')?.value
-    );
-    this.empSer.add(formdata).subscribe(
-      (res) => {
-        this.empSer.getEmpleados('');
-
-        document.getElementById('AddModal')?.classList.remove('show');
-        document.body.classList.remove('modal-open');
-        document.body.style.removeProperty('padding-right');
-        const modalBackdrop =
-          document.getElementsByClassName('modal-backdrop')[0];
-        modalBackdrop.parentNode?.removeChild(modalBackdrop);
-
-        toastr.success('Empleado agregado con éxito');
-      },
-      (error) => {
-        console.log(error);
-
-        toastr.error('Error al agregar al empleado');
-      }
-    );
-  }
-
-  seleccionarModificar(id: any) {
-    this.idModificar = id;
-    this.empleados.forEach((e) => {
-      if (id == e.id) {
-        this.modificarForm.setValue({
-          unombre: e.nombre,
-          uapellido: e.apellido,
-          uemail: e.email,
-          utelefono: e.telefono,
-          ufecha_nacim: e.fecha_nacim,
-          ufecha_incorp: e.fecha_incorp,
-          udepartamento: e.id_departamento,
+  /**
+   * Este método accede a la base de datos para traer todos los datos de un respectivo empleado.
+   * También accede a la tabla de departamentos mediante las claves foráneas que las relacionan,
+   * para poder traer el nombre del departamento.
+   * @param id
+   */
+  mostrar(id: number) {
+    this.empleado = null;
+    this.http.get(`${this.baseUrl}empleado/${id}`).subscribe((data: any) => {
+      this.empleado = data;
+      this.http
+        .get(`${this.baseUrl}departamento/${this.empleado.id_departamento}`)
+        .subscribe((departamento: any) => {
+          this.empleado.nombre_dep = `${departamento.nombre_departamento}`;
         });
-      }
     });
   }
 
-  modificar() {
-    const formData = new FormData();
-    formData.append('id', this.idModificar);
-    formData.append('nombre', this.modificarForm.get('unombre')?.value);
-    formData.append('apellido', this.modificarForm.get('uapellido')?.value);
-    formData.append('email', this.modificarForm.get('uemail')?.value);
-    formData.append('telefono', this.modificarForm.get('utelefono')?.value);
-    formData.append(
-      'fecha_nacim',
-      this.modificarForm.get('ufecha_nacim')?.value
-    );
-    formData.append(
-      'fecha_incorp',
-      this.modificarForm.get('ufecha_incorp')?.value
-    );
-    formData.append(
-      'id_departamento',
-      this.modificarForm.get('udepartamento')?.value
-    );
-
-    this.empSer.update(formData).subscribe(
-      () => {
-        this.empSer.getEmpleados('');
-
-        document.getElementById('UpdateModal')?.classList.remove('show');
-        document.body.classList.remove('modal-open');
-        document.body.style.removeProperty('padding-right');
-        const modalBackdrop =
-          document.getElementsByClassName('modal-backdrop')[0];
-        modalBackdrop.parentNode?.removeChild(modalBackdrop);
-
-        toastr.success('Empleado modificado con éxito');
-      },
-      (error) => {
-        console.log(error);
-        toastr.error('Error al modificar el empleado');
-      }
-    );
-  }
-
+  /**
+   * Asigna el id del empleado que se va a eliminar a una variable para ser usado en el método de eliminar.
+   * @param id 
+   */
   seleccionarEliminar(id: any) {
-    this.idModificar = id;
+    this.idEliminar = id;
   }
 
+  /**
+   * Este método accede a la API para eliminar un empleado de la base de datos, 
+   * y por consecuente, también su usuario.
+   */
   confirmarBorrado() {
-    this.empSer.delete(this.idModificar).subscribe(
+    this.empSer.delete(this.idEliminar).subscribe(
       () => {
         this.empSer.getEmpleados('');
 
@@ -202,24 +113,11 @@ export class EmpleadosComponent implements OnInit {
     );
   }
 
-  mostrarDetalles(id: any) {
-    this.empSer.getEmpleado(id).subscribe((datos: any) => {
-      this.empleado = datos;
-    });
-  }
-
-  mostrar(id: number) {
-    this.empleado = null;
-    this.http.get(`${this.baseUrl}empleado/${id}`).subscribe((data: any) => {
-      this.empleado = data;
-      this.http
-        .get(`${this.baseUrl}departamento/${this.empleado.id_departamento}`)
-        .subscribe((departamento: any) => {
-          this.empleado.nombre_dep = `${departamento.nombre_departamento}`;
-        });
-    });
-  }
-
+  /**
+   * Este método toma el listado de empleados y genera un PDF con ellos, 
+   * haciendo uso de la librería jsPDF.
+   * @param empleados
+   */
   generarPDF(empleados: any[]) {
     const doc = new jsPDF();
     const title = 'Listado de empleados';
@@ -267,7 +165,6 @@ export class EmpleadosComponent implements OnInit {
         30
       );
 
-      // Añade una nueva página para la siguiente denuncia
       if (i < empleados.length - 1) {
         doc.addPage();
       }
@@ -276,6 +173,11 @@ export class EmpleadosComponent implements OnInit {
     doc.save(title + '.pdf');
   }
 
+  /**
+   * Este método se encarga de mostrar el modal del chat con el usuario 
+   * cuyo id se ha pasado por parámetro.
+   * @param id_usuario 
+   */
   mostrarChat(id_usuario: number) {
     this.id_receptor = id_usuario + 1;
     this.http
@@ -287,6 +189,10 @@ export class EmpleadosComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
+  /**
+   * Este método envía un mensaje en el chat, especificando 
+   * quién es el autor, y quién el receptor.
+   */
   enviarMensaje() {
     const mensaje = this.mensajeForm.value.mensaje;
     const autor = this.id;
@@ -301,6 +207,12 @@ export class EmpleadosComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
+  /**
+   * Este método accede a la base de datos para traer todos los mensajes 
+   * previos correspondientes a una determinada conversación del chat.
+   * @param id_autor 
+   * @param id_usuario 
+   */
   obtenerMensajes(id_autor: any, id_usuario: any) {
     id_autor = this.id;
     id_usuario = this.id_receptor;
@@ -310,22 +222,33 @@ export class EmpleadosComponent implements OnInit {
     });
   }
 
-  generatePageArray() {
-    const pageArray = [];
-    for (let i = 1; i <= this.totalPages; i++) {
-      pageArray.push(i);
+  /**
+   * Este método se encarga de generar el numero de páginas total para la lista de empleados.
+   * @returns paginas
+   */
+  generarPaginacion() {
+    const paginas = [];
+    for (let i = 1; i <= this.paginasTotales; i++) {
+      paginas.push(i);
     }
-    return pageArray;
+    return paginas;
   }
 
-  paginateEmployees(): void {
-    const startIndex = (this.currentPage - 1) * this.pageSize;
-    const endIndex = startIndex + this.pageSize;
-    this.empleados = this.empleados.slice(startIndex, endIndex);
+  /**
+   * Método encargado de realizar la paginación para el listado de empleados.
+   */
+  paginarEmpleados(): void {
+    const inicio = (this.paginaActual - 1) * this.tamanioPag;
+    const fin = inicio + this.tamanioPag;
+    this.empleados = this.empleados.slice(inicio, fin);
   }
 
-  onPageChange(pageNumber: number): void {
-    this.currentPage = pageNumber;
-    this.paginateEmployees();
+  /**
+   * Método encargado de cambiar de página, y volver a paginar.
+   * @param numPagina 
+   */
+  onCambioPagina(numPagina: number): void {
+    this.paginaActual = numPagina;
+    this.paginarEmpleados();
   }
 }

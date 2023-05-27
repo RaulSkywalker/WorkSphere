@@ -12,7 +12,9 @@ import * as moment from 'moment';
 export class ProfileComponent implements OnInit {
   user: any = {};
   fechaFormateada: any;
-  constructor(private router: Router, private userSer: UserService) {}
+
+  constructor(private router: Router, private userSer: UserService) { }
+  
   ngOnInit(): void {
     this.userSer.getUser(1).subscribe((data: any) => {
       this.user = data;
@@ -23,6 +25,9 @@ export class ProfileComponent implements OnInit {
     });
   }
 
+  /**
+   * Método que se encarga de cerrar la sesión del usuario.
+   */
   logout() {
     localStorage.removeItem('user');
     this.router.navigateByUrl('/');

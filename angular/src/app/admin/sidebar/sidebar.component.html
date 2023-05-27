@@ -1,52 +1,85 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
-  <!-- Brand Logo -->
-  <a class="brand-link" style="color: white;">
-    <span class="brand-text font-weight-bold" style="margin-left: 20px;"><img src="../../../assets/logo_icon.png" style="height: 180px;"></span>
+  <a class="brand-link" style="color: white">
+    <span class="brand-text font-weight-bold" style="margin-left: 20px"
+      ><img src="../../../assets/logo_icon.png" style="height: 180px"
+    /></span>
   </a>
 
-  <!-- Sidebar -->
   <div class="sidebar">
-    <!-- Sidebar user panel (optional) -->
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+      <ul
+        class="nav nav-pills nav-sidebar flex-column"
+        data-widget="treeview"
+        role="menu"
+        data-accordion="false"
+      >
         <li class="nav-item">
-          <a class="nav-link active" style="background-color: rgb(224, 130, 42); width: 150px; border-radius: 30px; padding: 10px; margin: 10px; text-align: center; height: 50px; color: white; font-weight: bolder;">
-          <p>Administrador</p>
-        </a>
-        <a [routerLink]="['/admin/profile']" class="nav-link active" style="background-color: green;">
-          <i class="nav-icon fas fa-user"></i>
-          <p>Ver tu Perfil</p>
-        </a>
+          <a
+            class="nav-link active"
+            style="
+              background-color: rgb(224, 130, 42);
+              width: 150px;
+              border-radius: 30px;
+              padding: 10px;
+              margin: 10px;
+              text-align: center;
+              height: 50px;
+              color: white;
+              font-weight: bolder;
+            "
+          >
+            <p>Administrador</p>
+          </a>
+          <a
+            [routerLink]="['/admin/profile']"
+            class="nav-link active"
+            style="background-color: green"
+          >
+            <i class="nav-icon fas fa-user"></i>
+            <p>Ver tu Perfil</p>
+          </a>
         </li>
         <li class="nav-item">
-        <a (click)="logout()" class="nav-link active" style="background-color: rgb(163, 15, 15);">
-          <i class="nav-icon fas fa-arrow-left"></i>
-          <p>Cerrar sesión</p>
-        </a>
+          <a
+            (click)="logout()"
+            class="nav-link active"
+            style="background-color: rgb(163, 15, 15)"
+          >
+            <i class="nav-icon fas fa-arrow-left"></i>
+            <p>Cerrar sesión</p>
+          </a>
         </li>
       </ul>
-      
-      
     </div>
-    
 
     <nav class="mt-2">
-  <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-    <li class="nav-item">
-      <a [routerLink]="['/admin/empleados']" class="nav-link active" style="background-color: blue;">
-        <i class="nav-icon fas fa-users"></i>
-        <p>Empleados</p>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a [routerLink]="['/admin/departamentos']" class="nav-link active" style="background-color: orangered;">
-        <i class="nav-icon fas fa-th-large"></i>
-        <p>Departamentos</p>
-      </a>
-    </li>
-  </ul>
-</nav>
-    <!-- /.sidebar-menu -->
+      <ul
+        class="nav nav-pills nav-sidebar flex-column"
+        data-widget="treeview"
+        role="menu"
+        data-accordion="false"
+      >
+        <li class="nav-item">
+          <a
+            [routerLink]="['/admin/empleados']"
+            class="nav-link active"
+            style="background-color: blue"
+          >
+            <i class="nav-icon fas fa-users"></i>
+            <p>Empleados</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            [routerLink]="['/admin/departamentos']"
+            class="nav-link active"
+            style="background-color: orangered"
+          >
+            <i class="nav-icon fas fa-th-large"></i>
+            <p>Departamentos</p>
+          </a>
+        </li>
+      </ul>
+    </nav>
   </div>
-  <!-- /.sidebar -->
 </aside>
