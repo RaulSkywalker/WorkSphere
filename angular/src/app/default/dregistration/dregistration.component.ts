@@ -18,7 +18,11 @@ export class DregistrationComponent {
   registerForm: FormGroup;
   selectedImage: File = null;
 
-  constructor(private userSer: UserService, private fb: FormBuilder, private router: Router) {
+  constructor(
+    private userSer: UserService,
+    private fb: FormBuilder,
+    private router: Router
+  ) {
     this.registerForm = new FormGroup({
       name: new FormControl('', Validators.required),
       apellido: new FormControl('', Validators.required),
@@ -32,6 +36,10 @@ export class DregistrationComponent {
     });
   }
 
+  /**
+   * Método encargado de manejar el formulario de registro de la aplicación,
+   * con el fin de crear un nuevo usuario/empleado.
+   */
   registrar() {
     if (
       this.registerForm.get('pass')?.value !=
@@ -65,19 +73,22 @@ export class DregistrationComponent {
           document.body.classList.remove('modal-open');
           document.body.style.removeProperty('padding-right');
           const modalBackdrop =
-          document.getElementsByClassName('modal-backdrop')[0];
+            document.getElementsByClassName('modal-backdrop')[0];
           modalBackdrop.parentNode?.removeChild(modalBackdrop);
-        }); 
-      }
-      else {
+        });
+      } else {
         toastr.error('Debes rellenar todos los campos.');
       }
     }
   }
 
+  /**
+   * Método encargado de manejar el evento de seleccionar una imagen para el perfil.
+   * @param event
+   */
   onSelectImage(event) {
     var temppath = URL.createObjectURL(event.target.files[0]);
-    $("#AddUserImage").fadeIn("fast").attr("src", temppath);
-    this.selectedImage=<File>event.target.files[0];
+    $('#AddUserImage').fadeIn('fast').attr('src', temppath);
+    this.selectedImage = <File>event.target.files[0];
   }
 }

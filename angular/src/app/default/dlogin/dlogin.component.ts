@@ -17,12 +17,20 @@ import { UserService } from 'src/app/services/user.service';
 export class DloginComponent {
   loginForm: FormGroup;
 
-  constructor(private userSer: UserService, private fb: FormBuilder, private router: Router) {
+  constructor(
+    private userSer: UserService,
+    private fb: FormBuilder,
+    private router: Router
+  ) {
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       pass: new FormControl(''),
     });
   }
+
+  /**
+   * Método encargado de realizar el login del usuario en la aplicación.
+   */
   login() {
     if (this.loginForm.valid) {
       const formdata = new FormData();
@@ -38,8 +46,7 @@ export class DloginComponent {
           modalBackdrop.parentNode?.removeChild(modalBackdrop);
         }, 1000);
       }
-    }
-    else {
+    } else {
       toastr.error('Debes introducir tus datos para poder iniciar sesión.');
     }
   }
