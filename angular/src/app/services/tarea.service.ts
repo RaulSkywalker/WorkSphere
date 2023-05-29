@@ -32,6 +32,10 @@ export class TareaService {
     return this.http.get(this.baseUrl + 'getTarea/' + id);
   }
 
+  public getTareasByEmpleado(id: any) {
+    return this.http.get(this.baseUrl + 'getTareas/' + id);
+  }
+
   /**
    * Accede a la API para cambiar el gerente del departamento.
    * @param form

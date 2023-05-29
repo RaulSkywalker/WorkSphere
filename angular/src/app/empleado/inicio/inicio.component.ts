@@ -4,6 +4,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { userModel } from 'src/app/models/user.model';
 import { MensajeService } from 'src/app/services/mensaje.service';
+import { TareaService } from 'src/app/services/tarea.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -30,12 +31,14 @@ export class InicioComponent implements OnInit {
   paginaActual = 1;
   tamanioPag = 5;
   paginasTotales: any;
+  tareas: any = [];
 
   constructor(
     private userSer: UserService,
     private menSer: MensajeService,
     private http: HttpClient,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private tarSer: TareaService
   ) {
     this.mensajeForm = new FormGroup({
       mensaje: new FormControl(),
@@ -74,6 +77,15 @@ export class InicioComponent implements OnInit {
       this.amigos = response;
       this.amigoIds = response.map((amigo: any) => amigo.id);
     });
+
+    this.tarSer.getTareasByEmpleado(this.id-1).subscribe(
+      (response) => {
+        this.tareas = response;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   /**

@@ -40,3 +40,17 @@ ul {
   font-size: 12px;
   color: #999;
 }
+
+.users .card{
+  background-color: lightskyblue;
+  border-radius: 10px;
+  box-shadow: 3px 3px black;
+}
+
+.lower-part .card {
+  background-color: lightsalmon;
+  margin-left: 15%;
+  border-radius: 15px;
+  box-shadow: 7px 7px black;
+
+}
