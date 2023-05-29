@@ -13,6 +13,6 @@ class Departamento extends Model
     {
         return $this->hasMany('App\Models\Empleado', 'id_departamento', 'id');
     }
-    
+
     use HasFactory;
 }

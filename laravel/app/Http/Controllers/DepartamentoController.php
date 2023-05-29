@@ -10,31 +10,41 @@ use Illuminate\Support\Facades\DB;
 
 class DepartamentoController extends Controller
 {
-    public function mostrarDepartamentos(Request $request){
-        session(['keys'=>$request->keys]);
-        $departamentos=Departamento::where(function ($query){
-            $query->where('departamentos.id','LIKE','%'.session('keys').'%')
-            ->orwhere('departamentos.nombre_departamento','LIKE','%'.session('keys').'%')
-            ->orwhere('departamentos.descripcion','LIKE','%'.session('keys').'%')
-            ->orwhere('departamentos.id_gerente','LIKE','%'.session('keys').'%');
+    /**
+     * Función encargada de mostrar todos los departamentos que hay en la base de datos.
+     */
+    public function mostrarDepartamentos(Request $request)
+    {
+        session(['keys' => $request->keys]);
+        $departamentos = Departamento::where(function ($query) {
+            $query->where('departamentos.id', 'LIKE', '%' . session('keys') . '%')
+                ->orwhere('departamentos.nombre_departamento', 'LIKE', '%' . session('keys') . '%')
+                ->orwhere('departamentos.descripcion', 'LIKE', '%' . session('keys') . '%')
+                ->orwhere('departamentos.id_gerente', 'LIKE', '%' . session('keys') . '%');
         })->select('departamentos.*')->get();
-        return response()->json(['departamentos'=>$departamentos]);
+        return response()->json(['departamentos' => $departamentos]);
     }
 
+    /**
+     * Función que busca un departamento según su id, y devuelve sus datos.
+     */
     public function getDepartamento($id)
-{
-    $departamento = Departamento::findOrFail($id);
-    return response()->json($departamento);
-}
+    {
+        $departamento = Departamento::findOrFail($id);
+        return response()->json($departamento);
+    }
 
-public function asignarGerente(Request $request){
-        $validator=Validator::make($request->all(),[
-            'id'=>'required',
-            'id_gerente'=>'required',
+    /**
+     * Función que establece un nuevo gerente para el departamento.
+     */
+    public function asignarGerente(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => 'required',
+            'id_gerente' => 'required',
         ]);
         $departamento = Departamento::find($request->id);
-        $departamento->id_gerente=$request->id_gerente;
+        $departamento->id_gerente = $request->id_gerente;
         $departamento->save();
-}
-
+    }
 }

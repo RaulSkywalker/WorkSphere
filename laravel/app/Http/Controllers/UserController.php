@@ -31,12 +31,12 @@ class UserController extends Controller
         $user->role = 'empleado';
         $user->save();
 
-        $url="http://localhost:8000/storage/";
-        $file=$request->file('image');
+        $url = "http://localhost:8000/storage/";
+        $file = $request->file('image');
         $extension = $file->getClientOriginalExtension();
-        $path = $request->file('image')->storeAs('userimages/',$user->id.'.'.$extension);
-        $user->image=$path;
-        $user->imgpath=$url.$path;
+        $path = $request->file('image')->storeAs('userimages/', $user->id . '.' . $extension);
+        $user->image = $path;
+        $user->imgpath = $url . $path;
         $user->save();
 
         $empleado = new Empleado();
@@ -78,29 +78,29 @@ class UserController extends Controller
 
     public function updateUser(Request $request)
     {
-        $validator=Validator::make($request->all(),[
-            'id'=>'required',
-            'name'=>'required',
+        $validator = Validator::make($request->all(), [
+            'id' => 'required',
+            'name' => 'required',
             'image' => 'image'
         ]);
-        if($validator->fails()){
-            return response()->json(['Error'=>$validator->errors()->all()], 404);
+        if ($validator->fails()) {
+            return response()->json(['Error' => $validator->errors()->all()], 404);
         }
         $user = User::find($request->id);
-        $user->name=$request->name;
+        $user->name = $request->name;
         $user->save();
 
-         if ($request->hasFile('image')) {
-        $url = "http://localhost:8000/storage/";
-        $file = $request->file('image');
-        $extension = $file->getClientOriginalExtension();
-        $path = $request->file('image')->storeAs('userimages/', $user->id . '.' . $extension);
-        $user->image = $path;
-        $user->imgpath = $url . $path;
-        $user->save();
-    }
-        
-        return response()->json(['Mensaje'=>'Usuario actualizado correctamente']);
+        if ($request->hasFile('image')) {
+            $url = "http://localhost:8000/storage/";
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension();
+            $path = $request->file('image')->storeAs('userimages/', $user->id . '.' . $extension);
+            $user->image = $path;
+            $user->imgpath = $url . $path;
+            $user->save();
+        }
+
+        return response()->json(['Mensaje' => 'Usuario actualizado correctamente']);
     }
 
     public function deleteUser(Request $request)
@@ -156,21 +156,20 @@ class UserController extends Controller
     }
 
     public function removeFriend($user_id, $friend_id)
-{
-    // Buscar la instancia del modelo UserFriend para eliminarla
-    $userFriend = UserFriend::where('user_id', $user_id)
-                            ->where('friend_id', $friend_id)
-                            ->first();
+    {
+        // Buscar la instancia del modelo UserFriend para eliminarla
+        $userFriend = UserFriend::where('user_id', $user_id)
+            ->where('friend_id', $friend_id)
+            ->first();
 
-    // Si se encontró la instancia, eliminarla
-    if ($userFriend) {
-        UserFriend::where('user_id', $user_id)
-                  ->where('friend_id', $friend_id)
-                  ->delete();
-        return response()->json(['message' => 'Friendship deleted successfully']);
-    } else {
-        return response()->json(['message' => 'Friendship not found'], 404);
+        // Si se encontró la instancia, eliminarla
+        if ($userFriend) {
+            UserFriend::where('user_id', $user_id)
+                ->where('friend_id', $friend_id)
+                ->delete();
+            return response()->json(['message' => 'Friendship deleted successfully']);
+        } else {
+            return response()->json(['message' => 'Friendship not found'], 404);
+        }
     }
-}
-
 }
