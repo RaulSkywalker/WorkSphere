@@ -6,7 +6,7 @@ use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\DepartamentoController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MensajeController;
-
+use App\Http\Controllers\TareaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +45,8 @@ Route::get('users/{id}', [UserController::class, 'mostrarUsuarios']);
 Route::get('user/{id}', [UserController::class, 'getUser']);
 Route::post('updateUser', [UserController::class, 'updateUser']);
 Route::delete('deleteUser', [UserController::class, 'deleteUser']);
+
+/*Amigos*/
 Route::post('/users/{idUsuario}/friends/{idAmigo}', [UserController::class, 'agregarAmigo']);
 Route::get('/user/{user_id}/friends', [UserController::class, 'getUserFriends']);
 Route::get('/user/{user_id}/friends/count', [UserController::class, 'countUserFriends']);
@@ -53,3 +55,11 @@ Route::delete('/user/{user_id}/friends/{friend_id}/delete', [UserController::cla
 /*Mensajes*/
 Route::post('addMensaje/{id_autor}/{id_usuario}', [MensajeController::class, 'agregarMensaje']);
 Route::get('getMensajes/{id_autor}/{id_usuario}', [MensajeController::class, 'obtenerMensajes']);
+
+/*Tareas*/
+Route::post('addTarea', [TareaController::class, 'addTarea']);
+Route::get('getTareas', [TareaController::class, 'getTareas']);
+Route::get('getTareas/{id_empleado}', [TareaController::class, 'getTareasByEmpleado']);
+Route::get('getTarea/{id}', [TareaController::class, 'getTareaById']);
+Route::post('updateTarea/{id}', [TareaController::class, 'updateTarea']);
+Route::delete('deleteTarea/{id}', [TareaController::class, 'deleteTarea']);

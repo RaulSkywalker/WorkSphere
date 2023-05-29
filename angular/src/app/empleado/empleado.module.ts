@@ -10,6 +10,7 @@ import { InicioComponent } from './inicio/inicio.component';
 import { FooterComponent } from './footer/footer.component';
 import { AmigosComponent } from './amigos/amigos.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TareasComponent } from './tareas/tareas.component';
 
 
 
@@ -22,6 +23,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     InicioComponent,
     FooterComponent,
     AmigosComponent,
+    TareasComponent,
   ],
   imports: [
     CommonModule,

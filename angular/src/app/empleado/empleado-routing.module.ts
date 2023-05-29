@@ -5,6 +5,7 @@ import { EmpleadoComponent } from './empleado.component';
 import { InicioComponent } from './inicio/inicio.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AuthGuard } from '../guards/auth.guard';
+import { TareasComponent } from './tareas/tareas.component';
 
 const routes: Routes = [
   {
@@ -24,6 +25,11 @@ const routes: Routes = [
       {
         path: 'amigos',
         component: AmigosComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'tareas',
+        component: TareasComponent,
         canActivate: [AuthGuard],
       },
     ],

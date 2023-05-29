@@ -90,7 +90,6 @@ export class DepartamentosComponent implements OnInit {
     formData.append('id_gerente', this.gerenteForm.get('id_gerente')?.value);
 
     this.deptSer.gerente(formData).subscribe(() => {
-      console.log(formData);
       this.deptSer.getDepartamentos('');
     });
   }

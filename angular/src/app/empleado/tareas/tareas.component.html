@@ -1,0 +1,21 @@
+<div class="bd-example">
+  <table class="table table-hover">
+      <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Título</th>
+      <th scope="col">Estado</th>
+      <th scope="col">Fecha de vencimiento</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let tarea of tareas">
+      <th scope="row">{{tarea.id}}</th>
+      <td>{{tarea.titulo_tarea}}</td>
+      <td>{{tarea.estado}}</td>
+      <td>{{tarea.fecha_vencim}}</td>
+    </tr>
+  </tbody>
+
+  </table>
+</div>
