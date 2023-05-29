@@ -27,12 +27,11 @@ export class InicioComponent implements OnInit {
   mensajeForm: FormGroup;
   id_receptor: any;
   mensajes: any = [];
-  currentPage = 1;
-  pageSize = 5;
-  totalPages: any;
+  paginaActual = 1;
+  tamanioPag = 5;
+  paginasTotales: any;
 
   constructor(
-    private router: Router,
     private userSer: UserService,
     private menSer: MensajeService,
     private http: HttpClient,
@@ -63,8 +62,8 @@ export class InicioComponent implements OnInit {
 
     this.userSer.mostrarUsuarios(this.id).subscribe((data: any) => {
       this.users = data;
-      this.totalPages = Math.ceil(this.users.length / this.pageSize);
-      this.paginateUsers();
+      this.paginasTotales = Math.ceil(this.users.length / this.tamanioPag);
+      this.paginarUsuarios();
     });
 
     this.userSer.contarNumAmigos(this.id).subscribe((res: any) => {
@@ -77,12 +76,23 @@ export class InicioComponent implements OnInit {
     });
   }
 
+  /**
+   * Este método es el encargado de recoger por parámetro ciertos valores que
+   * serán necesarios a la hora de entablar una amistad.
+   * @param idUsuario
+   * @param idAmigo
+   * @param nombreAmigo
+   */
   entablarAmistad(idUsuario: any, idAmigo: any, nombreAmigo: any) {
     this.idAmistad = idUsuario;
     this.idAmigoNuevo = idAmigo;
     this.nombreAmigo = nombreAmigo;
   }
 
+  /**
+   * Método encargado de acceder a la API del back-end para añadir a un usuario
+   * como amigo en la plataforma.
+   */
   agregarAmigo() {
     this.userSer.agregarAmigo(this.idAmistad, this.idAmigoNuevo).subscribe();
     this.actualizar();
@@ -101,10 +111,20 @@ export class InicioComponent implements OnInit {
     this.ngOnInit();
   }
 
+  /**
+   * Método encargado de comprobar si un usuario de la
+   * lista ya es amigo del usuario actual.
+   * @param id
+   * @returns
+   */
   esAmigo(id: number): boolean {
     return this.amigoIds.includes(id);
   }
 
+  /**
+   * Método encargado de actualizar y refrescar los datos de la página,
+   * con el fin de que siempre estén correctamente.
+   */
   actualizar() {
     this.userSer.mostrarUsuarios(this.id).subscribe((data: any) => {
       this.users = data;
@@ -122,6 +142,11 @@ export class InicioComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
+  /**
+   * Este método se encarga de mostrar el modal del chat con el usuario
+   * cuyo id se ha pasado por parámetro.
+   * @param id_usuario
+   */
   mostrarChat(id_usuario: number) {
     this.id_receptor = id_usuario;
     this.http
@@ -133,6 +158,10 @@ export class InicioComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
+  /**
+   * Este método envía un mensaje en el chat, especificando
+   * quién es el autor, y quién el receptor.
+   */
   enviarMensaje() {
     const mensaje = this.mensajeForm.value.mensaje;
     const autor = this.id;
@@ -147,6 +176,12 @@ export class InicioComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
+  /**
+   * Este método accede a la base de datos para traer todos los mensajes
+   * previos correspondientes a una determinada conversación del chat.
+   * @param id_autor
+   * @param id_usuario
+   */
   obtenerMensajes(id_autor: any, id_usuario: any) {
     id_autor = this.id;
     id_usuario = this.id_receptor;
@@ -156,22 +191,33 @@ export class InicioComponent implements OnInit {
     });
   }
 
-  generatePageArray() {
-    const pageArray = [];
-    for (let i = 1; i <= this.totalPages; i++) {
-      pageArray.push(i);
+  /**
+   * Este método se encarga de generar el numero de páginas total para la lista de empleados.
+   * @returns paginas
+   */
+  generarPaginacion() {
+    const paginas = [];
+    for (let i = 1; i <= this.paginasTotales; i++) {
+      paginas.push(i);
     }
-    return pageArray;
+    return paginas;
   }
 
-  paginateUsers(): void {
-    const startIndex = (this.currentPage - 1) * this.pageSize;
-    const endIndex = startIndex + this.pageSize;
-    this.users = this.users.slice(startIndex, endIndex);
+  /**
+   * Método encargado de realizar la paginación para el listado de usuarios.
+   */
+  paginarUsuarios(): void {
+    const inicio = (this.paginaActual - 1) * this.tamanioPag;
+    const fin = inicio + this.tamanioPag;
+    this.users = this.users.slice(inicio, fin);
   }
 
-  onPageChange(pageNumber: number): void {
-    this.currentPage = pageNumber;
-    this.paginateUsers();
+  /**
+   * Método encargado de cambiar de página, y volver a paginar.
+   * @param numPagina
+   */
+  onCambioPagina(numPagina: number): void {
+    this.paginaActual = numPagina;
+    this.paginarUsuarios();
   }
 }

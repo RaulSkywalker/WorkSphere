@@ -6,5 +6,5 @@ export class empleadoModel {
   telefono: any = '';
   fecha_nacim: any = '';
   fecha_incorp: any = '';
-  id_departamento: any = "";
+  id_departamento: any = '';
 }

@@ -8,7 +8,6 @@ import { ErrorComponent } from './error/error.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { Router } from '@angular/router';
 
-
 @NgModule({
   declarations: [AppComponent, ErrorComponent, NotFoundComponent],
   imports: [
@@ -16,7 +15,7 @@ import { Router } from '@angular/router';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

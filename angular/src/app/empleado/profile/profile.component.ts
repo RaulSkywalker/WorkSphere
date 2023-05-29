@@ -17,13 +17,18 @@ export class ProfileComponent implements OnInit {
   updateForm: FormGroup;
   selectedImage: File;
 
-  constructor(private router: Router, private userSer: UserService, private fb: FormBuilder, private cdr: ChangeDetectorRef) {
+  constructor(
+    private router: Router,
+    private userSer: UserService,
+    private fb: FormBuilder,
+    private cdr: ChangeDetectorRef
+  ) {
     this.updateForm = this.fb.group({
       uname: ['', Validators.required],
     });
   }
   ngOnInit(): void {
-    this.id = localStorage.getItem('userid')
+    this.id = localStorage.getItem('userid');
     this.userSer.getUser(this.id).subscribe((data: any) => {
       this.user = data;
       const fechaBaseDatos = this.user.created_at;
@@ -37,11 +42,18 @@ export class ProfileComponent implements OnInit {
     });
   }
 
+  /**
+   * Método para cerrar la sesión del usuario
+   */
   logout() {
     localStorage.removeItem('user');
     this.router.navigateByUrl('/');
   }
 
+  /**
+   * Método encargado de actualizar la información pública del usuario,
+   * lo cual es su nombre, y su imagen de perfil.
+   */
   updateUser() {
     const formData = new FormData();
     formData.append('id', this.id);
@@ -56,7 +68,6 @@ export class ProfileComponent implements OnInit {
       formData.append('image', this.selectedImage);
     }
     this.userSer.updateUser(formData).subscribe((res) => {
-
       this.userSer.getUser(this.id).subscribe((data: any) => {
         this.user = data;
       });
@@ -69,9 +80,13 @@ export class ProfileComponent implements OnInit {
       modalBackdrop.parentNode?.removeChild(modalBackdrop);
       toastr.success('Modificado con éxito');
       location.reload();
-    });;
+    });
   }
 
+  /**
+   * Este método es el encargado de borrar la cuenta de usuario, en el caso de que
+   * así se desee. También borra al empleado asociado a la cuenta.
+   */
   deleteAccount() {
     this.userSer.deleteUser(this.id).subscribe();
     document.getElementById('DeleteModal')?.classList.remove('show');
@@ -82,9 +97,14 @@ export class ProfileComponent implements OnInit {
     this.router.navigateByUrl('/');
   }
 
+  /**
+   * Método encargado de manejar el evento que se produce cuando se 
+   * selecciona una nueva imagen para subir como foto de perfil.
+   * @param event
+   */
   onSelectImage(event) {
     var temppath = URL.createObjectURL(event.target.files[0]);
-    $("#AddUserImage").fadeIn("fast").attr("src", temppath);
+    $('#AddUserImage').fadeIn('fast').attr('src', temppath);
     this.selectedImage = <File>event.target.files[0];
   }
 }

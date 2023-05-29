@@ -1,11 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { departamentoModel } from '../models/departamento.model';
 import { BehaviorSubject, tap } from 'rxjs';
-import { Observable } from 'rxjs';
-import { empleadoModel } from '../models/empleado.model';
-
-
 
 @Injectable({
   providedIn: 'root',
@@ -19,10 +14,11 @@ export class DepartamentoService {
     this.getDepartamentos('');
   }
 
-  public update(form: any) {
-    return this.http.post(this.baseUrl + 'updateD', form);
-  }
-
+  /**
+   * Accede a la API para traer los departamentos de la base de datos.
+   * @param keys 
+   * @returns departamentos
+   */
   public getDepartamentos(keys: any) {
     return this.http
       .post(this.baseUrl + 'getDs?keys=' + keys, null)
@@ -32,10 +28,19 @@ export class DepartamentoService {
       });
   }
 
+  /**
+   * Accede a la API para traer un departamento del cual se ha especificado su id.
+   * @param id 
+   * @returns departamento
+   */
   public getDepartamento(id: any) {
     return this.http.get(this.baseUrl + 'departamento/' + id);
   }
 
+  /**
+   * Accede a la API para cambiar el gerente del departamento.
+   * @param form 
+   */
   public gerente(form: any) {
     return this.http.post(this.baseUrl + 'gerente', form);
   }

@@ -5,7 +5,6 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MensajeService } from 'src/app/services/mensaje.service';
 import { HttpClient } from '@angular/common/http';
 
-
 @Component({
   selector: 'app-amigos',
   templateUrl: './amigos.component.html',
@@ -20,12 +19,16 @@ export class AmigosComponent implements OnInit {
   id_receptor: any;
   mensajes: any = [];
   private baseUrl = 'http://localhost:8000/api/';
-  constructor(private userSer: UserService, private menSer: MensajeService, private http: HttpClient,
-    private cdr: ChangeDetectorRef) {
-      this.mensajeForm = new FormGroup({
+  constructor(
+    private userSer: UserService,
+    private menSer: MensajeService,
+    private http: HttpClient,
+    private cdr: ChangeDetectorRef
+  ) {
+    this.mensajeForm = new FormGroup({
       mensaje: new FormControl(),
     });
-    }
+  }
   ngOnInit(): void {
     this.id = localStorage.getItem('userid');
     this.userSer.obtenerAmigos(this.id).subscribe((response: any) => {
@@ -33,10 +36,17 @@ export class AmigosComponent implements OnInit {
     });
   }
 
+  /**
+   * Asigna el id del amigo con el que se va a eliminar la amistad.
+   * @param id
+   */
   seleccionarEliminar(id: any) {
     this.idEliminar = id;
   }
 
+  /**
+   * Este método accede a la API para eliminar la relación de amistad entre dos usuarios.
+   */
   confirmarBorrado() {
     this.userSer.eliminarAmigo(this.id, this.idEliminar).subscribe(
       () => {
@@ -48,7 +58,7 @@ export class AmigosComponent implements OnInit {
         document.body.classList.remove('modal-open');
         document.body.style.removeProperty('padding-right');
         const modalBackdrop =
-        document.getElementsByClassName('modal-backdrop')[0];
+          document.getElementsByClassName('modal-backdrop')[0];
         modalBackdrop.parentNode?.removeChild(modalBackdrop);
 
         toastr.success('Amistad finalizada exitosamente');
@@ -60,7 +70,12 @@ export class AmigosComponent implements OnInit {
     );
   }
 
-    mostrarChat(id_usuario: number) {
+  /**
+   * Este método se encarga de mostrar el modal del chat con el usuario
+   * cuyo id se ha pasado por parámetro.
+   * @param id_usuario
+   */
+  mostrarChat(id_usuario: number) {
     this.id_receptor = id_usuario;
     this.http
       .get(`${this.baseUrl}user/${id_usuario}`)
@@ -71,6 +86,10 @@ export class AmigosComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
+  /**
+   * Este método envía un mensaje en el chat, especificando
+   * quién es el autor, y quién el receptor.
+   */
   enviarMensaje() {
     const mensaje = this.mensajeForm.value.mensaje;
     const autor = this.id;
@@ -85,6 +104,12 @@ export class AmigosComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
+  /**
+   * Este método accede a la base de datos para traer todos los mensajes
+   * previos correspondientes a una determinada conversación del chat.
+   * @param id_autor
+   * @param id_usuario
+   */
   obtenerMensajes(id_autor: any, id_usuario: any) {
     id_autor = this.id;
     id_usuario = this.id_receptor;
@@ -92,5 +117,5 @@ export class AmigosComponent implements OnInit {
       this.mensajes = data;
       this.cdr.detectChanges();
     });
-  } 
+  }
 }

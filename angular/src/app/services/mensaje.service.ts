@@ -11,7 +11,15 @@ export class MensajeService {
 
   constructor(private http: HttpClient) {}
 
+  /**
+   * Accede a la API para traer los mensajes del chat desde la base de datos.
+   * @param id_autor 
+   * @param id_usuario 
+   * @returns mensajes
+   */
   public obtenerMensajes(id_autor: any, id_usuario: any) {
-    return this.http.get(this.baseUrl + 'getMensajes/' + id_autor + '/' + id_usuario);
+    return this.http.get(
+      this.baseUrl + 'getMensajes/' + id_autor + '/' + id_usuario
+    );
   }
 }

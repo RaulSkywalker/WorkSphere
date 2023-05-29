@@ -1,67 +1,128 @@
 <div class="container">
-    <div class="card bg-light col-4" *ngFor="let amigo of amigos" style="margin-top: 2%;">
-        <div class="card-header text-muted border-bottom-0">
-            <i class="fas fa-scroll"></i> {{amigo.role}}
-        </div>
-        <div class="card-body pt-0">
-            <div class="row">
-                <div class="col-7">
-                    <img src="{{amigo.imgpath}}" style="width: 50px; height: 50px">
-                    <h1 class="lead"><b><i class="fas fa-user-circle"></i> {{amigo.name}}</b></h1>
-                    <p class="text-muted text-sm"><i class="fas fa-envelope"></i><b> Correo de contacto: </b>{{amigo.email}}</p>
-                </div>
-            </div>
-        </div>
-        <div class="card-footer">
-            <div class="text-right">
-                <a href="#" class="btn btn-sm bg-red col-12 mb-3" style="border-radius: 20px;" data-bs-toggle="modal"
-                    data-bs-target="#DeleteModal" (click)="seleccionarEliminar(amigo.id)">
-                    <i class="fas fa-comments"></i> Finalizar amistad con {{amigo.name}}
-                </a>
-                <a href="#" class="btn btn-sm bg-teal col-12" style="border-radius: 20px;" data-bs-toggle="modal"
-                    data-bs-target="#ChatModal" (click)="mostrarChat(amigo.id)">
-                    <i class="fas fa-comments"></i> Hablar con {{amigo.name}}
-                </a>
-            </div>
-        </div>
+  <div
+    class="card bg-light col-4"
+    *ngFor="let amigo of amigos"
+    style="margin-top: 2%"
+  >
+    <div class="card-header text-muted border-bottom-0">
+      <i class="fas fa-scroll"></i> {{ amigo.role }}
     </div>
-</div>
-
-<!-- Modal eliminar amistad-->
-<div class="modal fade" id="DeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Terminar amistad</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="card-body pt-0">
+      <div class="row">
+        <div class="col-7">
+          <img src="{{ amigo.imgpath }}" style="width: 50px; height: 50px" />
+          <h1 class="lead">
+            <b><i class="fas fa-user-circle"></i> {{ amigo.name }}</b>
+          </h1>
+          <p class="text-muted text-sm">
+            <i class="fas fa-envelope"></i><b> Correo de contacto: </b
+            >{{ amigo.email }}
+          </p>
+        </div>
       </div>
-      <div class="modal-body">
-        <h2>¿Estás seguro de que quieres terminar esta amistad?</h2>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-        <button type="button" class="btn btn-danger" (click)="confirmarBorrado()">Sí</button>
+    </div>
+    <div class="card-footer">
+      <div class="text-right">
+        <a
+          href="#"
+          class="btn btn-sm bg-red col-12 mb-3"
+          style="border-radius: 20px"
+          data-bs-toggle="modal"
+          data-bs-target="#DeleteModal"
+          (click)="seleccionarEliminar(amigo.id)"
+        >
+          <i class="fas fa-comments"></i> Finalizar amistad con {{ amigo.name }}
+        </a>
+        <a
+          href="#"
+          class="btn btn-sm bg-teal col-12"
+          style="border-radius: 20px"
+          data-bs-toggle="modal"
+          data-bs-target="#ChatModal"
+          (click)="mostrarChat(amigo.id)"
+        >
+          <i class="fas fa-comments"></i> Hablar con {{ amigo.name }}
+        </a>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Modal Chat-->
-<div class="modal fade" id="ChatModal" tabindex="-1" aria-labelledby="chatModal" aria-hidden="true">
+<!-- Modal para eliminar una amistad-->
+<div
+  class="modal fade"
+  id="DeleteModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">
+          Terminar amistad
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <h2>¿Estás seguro de que quieres terminar esta amistad?</h2>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          No
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="confirmarBorrado()"
+        >
+          Sí
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal del chat-->
+<div
+  class="modal fade"
+  id="ChatModal"
+  tabindex="-1"
+  aria-labelledby="chatModal"
+  aria-hidden="true"
+>
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5">Chat con {{ amigo.name }}</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
       </div>
       <div class="modal-body">
         <ul>
-          <li *ngFor="let mensaje of mensajes" [ngClass]="{'me': mensaje.id_autor.toString() === id.toString(), 'notMe': mensaje.id_autor.toString() !== id.toString()}">
+          <li
+            *ngFor="let mensaje of mensajes"
+            [ngClass]="{
+              me: mensaje.id_autor.toString() === id.toString(),
+              notMe: mensaje.id_autor.toString() !== id.toString()
+            }"
+          >
             <div class="mensaje">
               <div class="contenido">
                 <p>{{ mensaje.mensaje }}</p>
               </div>
-              <div class="fecha-hora">{{ mensaje.fecha_mensaje }} {{ mensaje.hora_mensaje }}</div>
+              <div class="fecha-hora">
+                {{ mensaje.fecha_mensaje }} {{ mensaje.hora_mensaje }}
+              </div>
             </div>
           </li>
         </ul>
@@ -70,10 +131,22 @@
         <div class="form-group mensaje">
           <form class="form-horizontal" [formGroup]="mensajeForm">
             <label for="mensaje">Escribe un mensaje:</label>
-            <input type="text" class="form-control" id="mensaje" name="mensaje" formControlName="mensaje">
-            <br>
+            <input
+              type="text"
+              class="form-control"
+              id="mensaje"
+              name="mensaje"
+              formControlName="mensaje"
+            />
+            <br />
             <div>
-              <button type="button" class="btn btn-success btnchat" (click)="enviarMensaje()">Enviar Mensaje</button>
+              <button
+                type="button"
+                class="btn btn-success btnchat"
+                (click)="enviarMensaje()"
+              >
+                Enviar Mensaje
+              </button>
             </div>
           </form>
         </div>
