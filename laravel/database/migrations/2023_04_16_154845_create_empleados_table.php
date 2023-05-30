@@ -18,8 +18,6 @@ public function up()
         $table->id();
         $table->string('nombre_departamento');
         $table->text('descripcion');
-        $table->unsignedBigInteger('id_gerente')->nullable();
-        $table->foreign('id_gerente')->references('id')->on('empleados');
         $table->timestamps();
     });
 

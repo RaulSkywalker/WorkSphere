@@ -41,7 +41,7 @@ export class DepartamentoService {
    * Accede a la API para cambiar el gerente del departamento.
    * @param form 
    */
-  public gerente(form: any) {
-    return this.http.post(this.baseUrl + 'gerente', form);
+  public obtenerEmpleadosDepartamento(id: any) {
+    return this.http.get(this.baseUrl + 'empleadosDep/' + id);
   }
 }

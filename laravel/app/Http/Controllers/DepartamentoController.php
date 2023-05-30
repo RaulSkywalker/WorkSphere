@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Departamento;
+use App\Models\Empleado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
@@ -35,16 +36,12 @@ class DepartamentoController extends Controller
     }
 
     /**
-     * Función que establece un nuevo gerente para el departamento.
+     * Función que devuelve una lista de todos los empleados 
+     * que pertenecen a un determinado departamento.
      */
-    public function asignarGerente(Request $request)
+    public function obtenerEmpleadosPorDepartamento($id)
     {
-        $validator = Validator::make($request->all(), [
-            'id' => 'required',
-            'id_gerente' => 'required',
-        ]);
-        $departamento = Departamento::find($request->id);
-        $departamento->id_gerente = $request->id_gerente;
-        $departamento->save();
+        $empleados = Empleado::where('id_departamento', $id)->get();
+        return response()->json(['empleados' => $empleados]);
     }
 }

@@ -121,20 +121,20 @@
 <div class="modal fade" id="AmigoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header" style="background-color: #12c7b2; color: black;">
         <h1 class="modal-title fs-5" id="exampleModalLabel">
           Entablar nueva amistad
         </h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-        <h2>¿Quieres hacerte amigo de {{ nombreAmigo }}?</h2>
+      <div class="modal-body" style="background-color: #97e3b0; color: black;">
+        <h2>¿Quieres hacerte amigo de <span style="font-size: larger;">{{ nombreAmigo }}</span>?</h2>
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer" style="background-color: #d47694; display: flex; justify-content: center;">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           No
         </button>
-        <button type="button" class="btn btn-danger" (click)="agregarAmigo()">
+        <button type="button" class="btn btn-success" (click)="agregarAmigo()">
           Sí
         </button>
       </div>
@@ -145,12 +145,13 @@
 <!-- Modal para el chat-->
 <div class="modal fade" id="ChatModal" tabindex="-1" aria-labelledby="chatModal" aria-hidden="true">
   <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5">Chat con {{ user.name }}</h1>
+    <div class="modal-content" style="border-radius: 50px;">
+      <div class="modal-header" style="background-color: #075E54; color: white;">
+        <img src="{{ user.imgpath }}" style="width: 50px; height: 50px; border-radius: 50px;" />&nbsp;
+        <h1 class="modal-title fs-5">{{ user.name }}</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" style="background-color: #DCF8C6;">
         <ul>
           <li *ngFor="let mensaje of mensajes" [ngClass]="{
               me: mensaje.id_autor.toString() === id.toString(),
@@ -167,15 +168,16 @@
           </li>
         </ul>
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer" style="background-color: #128C7E;">
         <div class="form-group mensaje">
           <form class="form-horizontal" [formGroup]="mensajeForm">
             <label for="mensaje">Escribe un mensaje:</label>
-            <input type="text" class="form-control" id="mensaje" name="mensaje" formControlName="mensaje" />
+            <input type="text" class="form-control" id="mensaje" name="mensaje" formControlName="mensaje" style="background-color: #075E54;
+              color: white;" placeholder="Mensaje"/>
             <br />
-            <div>
-              <button type="button" class="btn btn-success btnchat" (click)="enviarMensaje()">
-                Enviar Mensaje
+            <div style="display: flex; justify-content: center;">
+              <button type="button" class="btn bg-gradient-green btnchat" (click)="enviarMensaje()">
+                <i class="fa fa-send"></i>
               </button>
             </div>
           </form>

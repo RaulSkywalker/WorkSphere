@@ -1,6 +1,6 @@
-<div style="padding: 2%; display: flex; justify-content: space-between;">
+<div style="padding: 2%; display: flex; justify-content: center;">
   <div class="col-md-9">
-    <div class="card card-primary card-outline" style="width: 400px; float: left;">
+    <div class="card card-primary card-outline" style="width: 400px; border-radius: 15px; box-shadow: 9px 9px 4px black;">
       <div class="card-header">
         <h3 class="card-title">DEPARTAMENTOS DE LA EMPRESA</h3>
       </div>
@@ -9,7 +9,7 @@
           <table class="table table-hover table-striped">
             <thead class="thead-dark">
               <tr>
-                <th>Nombre del Departamento</th>
+                <th></th>
                 <th></th>
               </tr>
             </thead>
@@ -47,39 +47,14 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p>{{ departamento.descripcion }}</p>
-        <h6>Gerente del departamento: </h6>
-        <p>{{ departamento.gerente_nombre }}</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-success" (click)="asignarGerente(departamento.id)" data-bs-toggle="modal"
-          data-bs-target="#GerenteModal">
-          Asignar gerente a éste departamento
-        </button>
-      </div>
-    </div>
-  </div>
+  <p>{{ departamento.descripcion }}</p>
+  <h6>Miembros del departamento:</h6>
+  <ul *ngIf="empleadosDelDepartamento && empleadosDelDepartamento.length > 0" style="list-style: none;">
+    <li *ngFor="let empleado of empleadosDelDepartamento">{{ empleado.nombre }} {{ empleado.apellido }}</li>
+  </ul>
+  <p *ngIf="!empleadosDelDepartamento || empleadosDelDepartamento.length === 0">No hay empleados en este departamento actualmente.</p>
 </div>
-
-<!-- Modal de asignación de nuevo gerente-->
-<div class="modal fade" id="GerenteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">ASIGNACIÓN DE GERENTE</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <h4>ESCOGE A UN EMPLEADO PARA QUE SEA EL GERENTE DE {{ departamento.nombre_departamento }}</h4>
-        <form [formGroup]="gerenteForm" class="form-horizontal">
-          <select class="form-control" id="id_gerente" formControlName="id_gerente">
-            <option *ngFor="let emp of empleados" [value]="emp.id">{{emp.nombre}} {{emp.apellido}}</option>
-          </select>
-        </form>
-      </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-danger" (click)="asignacion()">Hecho</button>
       </div>
     </div>
   </div>

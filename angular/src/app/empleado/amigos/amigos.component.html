@@ -1,46 +1,29 @@
-<div class="container">
-  <div
-    class="card bg-light col-4"
-    *ngFor="let amigo of amigos"
-    style="margin-top: 2%"
-  >
-    <div class="card-header text-muted border-bottom-0">
-      <i class="fas fa-scroll"></i> {{ amigo.role }}
+<div class="container" style="text-align: center; display: flex; justify-content: space-between;">
+  <div class="card col-3" *ngFor="let amigo of amigos"
+    style="margin-top: 2%; text-align: center; border-radius: 15px; box-shadow: 9px 9px 4px black; background-color: aquamarine;">
+    <div class="card-header text-muted border-bottom-0" style="background-color: aquamarine;">
     </div>
-    <div class="card-body pt-0">
-      <div class="row">
-        <div class="col-7">
-          <img src="{{ amigo.imgpath }}" style="width: 50px; height: 50px" />
+    <div class="card-body pt-0" style="display: flex; height: fit-content;">
+      <div class="row" style="justify-content: center; background-color: aquamarine;">
+        <div class="col-12">
+          <img src="{{ amigo.imgpath }}" style="width: 100px; height: 100px; border-radius: 50px;" />
           <h1 class="lead">
-            <b><i class="fas fa-user-circle"></i> {{ amigo.name }}</b>
+            <b>{{ amigo.name }}</b>
           </h1>
           <p class="text-muted text-sm">
-            <i class="fas fa-envelope"></i><b> Correo de contacto: </b
-            >{{ amigo.email }}
+            <i class="fas fa-envelope"></i><b> Correo de contacto: </b>{{ amigo.email }}
           </p>
         </div>
       </div>
     </div>
-    <div class="card-footer">
+    <div class="card-footer" style="background-color: cornflowerblue; border-radius: 20px; border: 3px solid blue;">
       <div class="text-right">
-        <a
-          href="#"
-          class="btn btn-sm bg-red col-12 mb-3"
-          style="border-radius: 20px"
-          data-bs-toggle="modal"
-          data-bs-target="#DeleteModal"
-          (click)="seleccionarEliminar(amigo.id)"
-        >
-          <i class="fas fa-comments"></i> Finalizar amistad con {{ amigo.name }}
+        <a href="#" class="btn btn-sm bg-gradient-red col-12 mb-3" style="border-radius: 20px" data-bs-toggle="modal"
+          data-bs-target="#DeleteModal" (click)="seleccionarEliminar(amigo.id)">
+          <i class="fas fa-close"></i> Finalizar amistad con {{ amigo.name }}
         </a>
-        <a
-          href="#"
-          class="btn btn-sm bg-teal col-12"
-          style="border-radius: 20px"
-          data-bs-toggle="modal"
-          data-bs-target="#ChatModal"
-          (click)="mostrarChat(amigo.id)"
-        >
+        <a href="#" class="btn btn-sm bg-gradient-green col-12" style="border-radius: 20px" data-bs-toggle="modal"
+          data-bs-target="#ChatModal" (click)="mostrarChat(amigo.id)">
           <i class="fas fa-comments"></i> Hablar con {{ amigo.name }}
         </a>
       </div>
@@ -49,38 +32,23 @@
 </div>
 
 <!-- Modal para eliminar una amistad-->
-<div
-  class="modal fade"
-  id="DeleteModal"
-  tabindex="-1"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
+<div class="modal fade" id="DeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header" style="background-color: #12c7b2; color: black;">
         <h1 class="modal-title fs-5" id="exampleModalLabel">
           Terminar amistad
         </h1>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" style="background-color: #97e3b0; color: black;">
         <h2>¿Estás seguro de que quieres terminar esta amistad?</h2>
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer" style="background-color: #d47694; display: flex; justify-content: center;">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           No
         </button>
-        <button
-          type="button"
-          class="btn btn-danger"
-          (click)="confirmarBorrado()"
-        >
+        <button type="button" class="btn btn-success" (click)="confirmarBorrado()">
           Sí
         </button>
       </div>
@@ -89,33 +57,20 @@
 </div>
 
 <!-- Modal del chat-->
-<div
-  class="modal fade"
-  id="ChatModal"
-  tabindex="-1"
-  aria-labelledby="chatModal"
-  aria-hidden="true"
->
+<div class="modal fade" id="ChatModal" tabindex="-1" aria-labelledby="chatModal" aria-hidden="true">
   <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5">Chat con {{ amigo.name }}</h1>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+    <div class="modal-content" style="border-radius: 50px;">
+      <div class="modal-header" style="background-color: #075E54; color: white;">
+        <img src="{{ amigo.imgpath }}" style="width: 50px; height: 50px; border-radius: 50px;" />&nbsp;
+        <h1 class="modal-title fs-5">{{ amigo.name }}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" style="background-color: #DCF8C6;">
         <ul>
-          <li
-            *ngFor="let mensaje of mensajes"
-            [ngClass]="{
+          <li *ngFor="let mensaje of mensajes" [ngClass]="{
               me: mensaje.id_autor.toString() === id.toString(),
               notMe: mensaje.id_autor.toString() !== id.toString()
-            }"
-          >
+            }">
             <div class="mensaje">
               <div class="contenido">
                 <p>{{ mensaje.mensaje }}</p>
@@ -127,25 +82,16 @@
           </li>
         </ul>
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer" style="background-color: #128C7E;">
         <div class="form-group mensaje">
           <form class="form-horizontal" [formGroup]="mensajeForm">
             <label for="mensaje">Escribe un mensaje:</label>
-            <input
-              type="text"
-              class="form-control"
-              id="mensaje"
-              name="mensaje"
-              formControlName="mensaje"
-            />
+            <input type="text" class="form-control" id="mensaje" name="mensaje" formControlName="mensaje" style="background-color: #075E54;
+              color: white;" placeholder="Mensaje" />
             <br />
-            <div>
-              <button
-                type="button"
-                class="btn btn-success btnchat"
-                (click)="enviarMensaje()"
-              >
-                Enviar Mensaje
+            <div style="display: flex; justify-content: center;">
+              <button type="button" class="btn bg-gradient-green btnchat" (click)="enviarMensaje()">
+                <i class="fa fa-send"></i>
               </button>
             </div>
           </form>

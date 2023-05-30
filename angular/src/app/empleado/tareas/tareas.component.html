@@ -29,7 +29,7 @@
 <!-- Modal para mostrar detalles de la tarea-->
 <div class="modal fade" id="DetailsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <div class="modal-content" style="text-align: center;">
+    <div class="modal-content" style="text-align: center; border-radius: 50px;">
       <div class="modal-header" style="background-color: saddlebrown; color: whitesmoke;">
         <h1 class="modal-title fs-5" id="exampleModalLabel">
           TAREA: {{ tarea?.titulo_tarea }}
@@ -43,10 +43,9 @@
         </div>
         <div class="row">
              <h6>Estado actual de la tarea:</h6>
-            <h3><span class="badge bg-dark">{{ tarea.estado }}</span></h3>
-            <div class="col-4" style="margin-left: 33%">
-              <button class="btn btn-success" style="border-radius: 15px; font-weight: bolder; font-size: larger;" (click)="cambiarEstado(tarea.id)">Cambiar estado</button>
-            </div>
+            <h3><span [ngClass]="{'badge bg-dark': tarea.estado === 'No comenzada', 'badge bg-green': tarea.estado !== 'No comenzada'}">
+            {{tarea.estado}}
+          </span></h3>
         </div>
         <br>
         <div class="row">
@@ -61,7 +60,7 @@
 <!-- Modal para cambiar estado -->
 <div class="modal fade" id="EditModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
-        <div class="modal-content">
+        <div class="modal-content" style="border-radius: 50px;">
             <div class="modal-header" style="background-color: saddlebrown; color: whitesmoke;">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Cambiar el estado de la tarea</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

@@ -37,6 +37,7 @@ Route::post('getDs', [DepartamentoController::class, 'mostrarDepartamentos']);
 Route::get('departamentos', [DepartamentoController::class, 'mostrarDepartamentos']);
 Route::get('departamento/{id}', [DepartamentoController::class, 'getDepartamento']);
 Route::post('gerente', [DepartamentoController::class, 'asignarGerente']);
+Route::get('empleadosDep/{id}', [DepartamentoController::class, 'obtenerEmpleadosPorDepartamento']);
 
 /*Usuarios*/
 Route::post('register', [UserController::class, 'register']);

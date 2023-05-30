@@ -6,7 +6,7 @@ button:disabled {
 .mensaje {width: 100%;}
 
 .btnchat{
-width: 100%;}
+border-radius: 100px;}
 
 ul {
   list-style: none;

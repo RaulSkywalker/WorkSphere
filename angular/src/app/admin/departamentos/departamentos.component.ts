@@ -19,6 +19,7 @@ export class DepartamentosComponent implements OnInit {
   departamentoSeleccionado: any = null;
   departamento: any = {};
   empleados: empleadoModel[] = [];
+  empleadosDelDepartamento: empleadoModel[] = [];
 
   constructor(
     private deptSer: DepartamentoService,
@@ -63,34 +64,11 @@ export class DepartamentosComponent implements OnInit {
       .get(`${this.baseUrl}departamento/${id}`)
       .subscribe((data: any) => {
         this.departamento = data;
-        this.http
-          .get(`${this.baseUrl}empleado/${this.departamento.id_gerente}`)
-          .subscribe((gerente: any) => {
-            this.departamento.gerente_nombre = `${gerente.nombre} ${gerente.apellido}`;
-          });
+        this.deptSer.obtenerEmpleadosDepartamento(id).subscribe((data: any) => {
+          this.empleadosDelDepartamento = data.empleados;
+          console.log(this.empleadosDelDepartamento);
+        })
       });
   }
 
-  /**
-   * Este método recoge el id del departamento en el que se ha pulsado el botón y se lo 
-   * asigna a una variable para ser usado en el método de asignar un gerente.
-   * @param id 
-   */
-  asignarGerente(id: any) {
-    this.idEditar = id;
-  }
-
-  /**
-   * Este método se encarga de cambiar o asignar un nuevo gerente al departamento,
-   * el gerente en cuestión viene desde la tabla de empleados.
-   */
-  asignacion() {
-    const formData = new FormData();
-    formData.append('id', this.idEditar);
-    formData.append('id_gerente', this.gerenteForm.get('id_gerente')?.value);
-
-    this.deptSer.gerente(formData).subscribe(() => {
-      this.deptSer.getDepartamentos('');
-    });
-  }
 }
