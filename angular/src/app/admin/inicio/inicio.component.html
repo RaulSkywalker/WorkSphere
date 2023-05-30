@@ -20,7 +20,9 @@
         <tbody>
             <tr *ngFor="let tarea of tareas">
                 <td>{{tarea.titulo_tarea}}</td>
-                <td><span class="badge bg-secondary">{{tarea.estado}}</span></td>
+                <td><span [ngClass]="{'badge bg-dark': tarea.estado === 'No comenzada', 'badge bg-green': tarea.estado !== 'No comenzada'}">
+            {{tarea.estado}}
+          </span></td>
                 <td><span class="badge bg-gradient-indigo">{{tarea.fecha_vencim}}</span></td>
                 <td>
                     <button type="button" class="btn btn-default btn-sm" data-bs-toggle="modal"

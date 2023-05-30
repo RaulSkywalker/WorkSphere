@@ -63,6 +63,20 @@ class TareaController extends Controller
         return response()->json(['message' => 'Tarea actualizada exitosamente'], 200);
     }
 
+    public function changeStatus(Request $request, $id)
+    {
+        $tarea = Tarea::find($id);
+
+        if (!$tarea) {
+            return response()->json(['message' => 'Tarea no encontrada'], 404);
+        }
+
+        $tarea->estado = $request->input('estado');
+        $tarea->save();
+
+        return response()->json(['message' => 'Tarea actualizada exitosamente'], 200);
+    }
+
     public function deleteTarea($id)
     {
         $tarea = Tarea::find($id);

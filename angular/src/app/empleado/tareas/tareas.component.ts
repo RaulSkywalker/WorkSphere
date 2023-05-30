@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { TareaService } from 'src/app/services/tarea.service';
 
 @Component({
@@ -12,8 +13,17 @@ export class TareasComponent implements OnInit {
   tareas: any;
   tarea: any = {};
   idSeleccionado: any;
+  editForm: FormGroup;
 
-  constructor(private tarSer: TareaService, private http: HttpClient) {}
+  constructor(
+    private tarSer: TareaService,
+    private http: HttpClient,
+    private fb: FormBuilder) { 
+      this.editForm = this.fb.group({
+        estado: [''],
+      });
+    }
+  
   ngOnInit(): void {
     this.id = localStorage.getItem('userid');
     this.tarSer.getTareasByEmpleado(this.id - 1).subscribe(
@@ -33,16 +43,16 @@ export class TareasComponent implements OnInit {
     });
   }
 
-  marcarParaActualizar(id: any) {
+  cambiarEstado(id: any) {
     this.idSeleccionado = id;
   }
 
-  cambiarEstado() {
+  confirmarEstado() {
     const tareaId = this.idSeleccionado;
     const formData = new FormData();
-    formData.append('estado', 'No comenzada');
+    formData.append('estado', this.editForm.get('estado')?.value);
 
-    this.tarSer.updateTarea(tareaId, formData).subscribe(
+    this.tarSer.changeStatus(tareaId, formData).subscribe(
       (response) => {
         this.tarSer.getTareas().subscribe(
           (response) => {
@@ -53,7 +63,7 @@ export class TareasComponent implements OnInit {
           }
         );
 
-        document.getElementById('ChangeStatusModal')?.classList.remove('show');
+        document.getElementById('EditModal')?.classList.remove('show');
         document.body.classList.remove('modal-open');
         document.body.style.removeProperty('padding-right');
         const modalBackdrop =
@@ -66,39 +76,6 @@ export class TareasComponent implements OnInit {
         console.log(error);
 
         toastr.error('Error al cambiar el estado de la tarea');
-      }
-    );
-  }
-
-  marcarParaEliminar(id: any) {
-    this.idSeleccionado = id;
-  }
-
-  eliminarTarea() {
-    this.tarSer.deleteTarea(this.idSeleccionado).subscribe(
-      () => {
-        this.tarSer.getTareas().subscribe(
-          (response) => {
-            this.tareas = response;
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
-
-        document.getElementById('DeleteModal')?.classList.remove('show');
-        document.body.classList.remove('modal-open');
-        document.body.style.removeProperty('padding-right');
-        const modalBackdrop =
-          document.getElementsByClassName('modal-backdrop')[0];
-        modalBackdrop.parentNode?.removeChild(modalBackdrop);
-
-        toastr.success('Tarea eliminada con éxito');
-      },
-      (error) => {
-        console.log(error);
-
-        toastr.error('Error al eliminar la tarea');
       }
     );
   }

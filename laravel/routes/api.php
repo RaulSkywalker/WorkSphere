@@ -62,4 +62,5 @@ Route::get('getTareas', [TareaController::class, 'getTareas']);
 Route::get('getTareas/{id_empleado}', [TareaController::class, 'getTareasByEmpleado']);
 Route::get('getTarea/{id}', [TareaController::class, 'getTareaById']);
 Route::post('updateTarea/{id}', [TareaController::class, 'updateTarea']);
+Route::post('changeStatus/{id}', [TareaController::class, 'changeStatus']);
 Route::delete('deleteTarea/{id}', [TareaController::class, 'deleteTarea']);

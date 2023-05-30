@@ -11,18 +11,79 @@
     <tbody>
       <tr *ngFor="let tarea of tareas">
         <td>{{tarea.titulo_tarea}}</td>
-        <td><span class="badge bg-dark">{{tarea.estado}}</span></td>
-        <td><span class="badge bg-gradient-indigo">{{tarea.fecha_vencim}}</span></td>
+        <td><h5><span [ngClass]="{'badge bg-dark': tarea.estado === 'No comenzada', 'badge bg-green': tarea.estado !== 'No comenzada'}">
+            {{tarea.estado}}
+          </span></h5></td>
+        <td><h5><span class="badge bg-gradient-gray">{{tarea.fecha_vencim}}</span></h5></td>
         <td>
           <button type="button" class="btn btn-default btn-sm" data-bs-toggle="modal" data-bs-target="#DetailsModal"
             (click)="verDetallesTarea(tarea.id)"><i class="fas fa-eye"></i></button>
           <button type="button" class="btn btn-default btn-sm" data-bs-toggle="modal" data-bs-target="#EditModal"
-            (click)="marcarParaActualizar(tarea.id)"><i class="fas fa-sync-alt"></i></button>
-          <button type="button" class="btn btn-default btn-sm" data-bs-toggle="modal" data-bs-target="#DeleteModal"
-            (click)="marcarParaEliminar(tarea.id)"><i class="fas fa-trash"></i></button>
+            (click)="cambiarEstado(tarea.id)"><i class="fas fa-sync-alt"></i></button>
         </td>
       </tr>
     </tbody>
-
   </table>
+</div>
+
+<!-- Modal para mostrar detalles de la tarea-->
+<div class="modal fade" id="DetailsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="text-align: center;">
+      <div class="modal-header" style="background-color: saddlebrown; color: whitesmoke;">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">
+          TAREA: {{ tarea?.titulo_tarea }}
+        </h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" style="background-color: #4d3636; color: white; font-size: larger; font-weight: bolder;">
+        <div class="row">
+             <h6>Descripción de la tarea:</h6>
+            <p>{{ tarea.descripcion_tarea }}</p>
+        </div>
+        <div class="row">
+             <h6>Estado actual de la tarea:</h6>
+            <h3><span class="badge bg-dark">{{ tarea.estado }}</span></h3>
+            <div class="col-4" style="margin-left: 33%">
+              <button class="btn btn-success" style="border-radius: 15px; font-weight: bolder; font-size: larger;" (click)="cambiarEstado(tarea.id)">Cambiar estado</button>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+             <h6>Fecha en la que vence la tarea:</h6>
+            <p>{{ tarea.fecha_vencim }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para cambiar estado -->
+<div class="modal fade" id="EditModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: saddlebrown; color: whitesmoke;">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Cambiar el estado de la tarea</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="background-color: #4d3636; color: white; font-size: larger; font-weight: bolder;">
+                <form [formGroup]="editForm" class="form-horizontal">
+                    <div class="container-fluid">
+                        <label>Introduce el nuevo estado para la tarea:</label>
+                        <div class="row">
+                            <input type="text" id="estado" class="form-control" formControlName="estado" placeholder="(Por favor, escribe un estado que describa bien el estado actual en el que se encuentra la tarea.)"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer" style="background-color: saddlebrown;">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                    Cancelar
+                </button>
+                <button type="button" class="btn btn-success" (click)="confirmarEstado()">
+                    Actualizar estado
+                </button>
+            </div>
+        </div>
+    </div>
 </div>

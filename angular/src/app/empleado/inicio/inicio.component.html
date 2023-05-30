@@ -11,7 +11,7 @@
       <div class="info-box-content">
         <span class="info-box-text text-center" style="font-size: xx-large">{{
           empleado.nombre_dep
-        }}</span>
+          }}</span>
       </div>
     </div>
   </div>
@@ -51,23 +51,12 @@
             <tr *ngFor="let user of users">
               <td>{{ user.name }}</td>
               <td>
-                <button
-                  type="button"
-                  (click)="entablarAmistad(id, user.id, user.name)"
-                  class="btn btn-default btn-sm"
-                  data-bs-toggle="modal"
-                  data-bs-target="#AmigoModal"
-                  [disabled]="esAmigo(user.id)"
-                >
+                <button type="button" (click)="entablarAmistad(id, user.id, user.name)" class="btn btn-default btn-sm"
+                  data-bs-toggle="modal" data-bs-target="#AmigoModal" [disabled]="esAmigo(user.id)">
                   <i class="fas fa-plus"></i>
                 </button>
-                <button
-                  type="button"
-                  class="btn btn-default btn-sm"
-                  data-bs-toggle="modal"
-                  data-bs-target="#ChatModal"
-                  (click)="mostrarChat(user.id)"
-                >
+                <button type="button" class="btn btn-default btn-sm" data-bs-toggle="modal" data-bs-target="#ChatModal"
+                  (click)="mostrarChat(user.id)">
                   <i class="fas fa-comment"></i>
                 </button>
               </td>
@@ -75,79 +64,68 @@
           </tbody>
         </table>
       </div>
-      <div class="card-footer"><ul class="pagination pagination-sm float-right">
-            <li
-              class="page-item"
-              *ngFor="let page of generarPaginacion()"
-              [class.active]="paginaActual === page"
-            >
-              <a class="page-link" (click)="onCambioPagina(page)">{{ page }}</a>
-            </li>
-          </ul></div>
+      <div class="card-footer">
+        <ul class="pagination pagination-sm float-right">
+          <li class="page-item" *ngFor="let page of generarPaginacion()" [class.active]="paginaActual === page">
+            <a class="page-link" (click)="onCambioPagina(page)">{{ page }}</a>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>
 
 <div class="lower-part col-5">
   <div class="card">
-              <div class="card-header border-transparent">
-                <h2 class="card-title">Mis Tareas</h2>
+    <div class="card-header border-transparent">
+      <h2 class="card-title">Mis Tareas</h2>
 
-                <div class="card-tools">
-                  <button type="button" class="btn btn-dark" data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
-                  </button>&nbsp;
-                  <button type="button" class="btn btn-dark" data-card-widget="remove">
-                    <i class="fas fa-times"></i>
-                  </button>
-                </div>
-              </div>
-              <div class="card-body p-0">
-                <div class="table-responsive">
-                  <table class="table m-0">
-                    <thead>
-                    <tr>
-                      <th>Título</th>
-                      <th>Estado</th>
-                      <th>Fecha vencimiento</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr *ngFor="let tarea of tareas">
-                      <td>{{tarea.titulo_tarea}}</td>
-                      <td><span class="badge bg-secondary">{{tarea.estado}}</span></td>
-                      <td><span class="badge bg-gradient-indigo">{{tarea.fecha_vencim}}</span></td>
-                    </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <div class="card-footer clearfix">
-                <a [routerLink]="['/empleado/tareas']" class="btn btn-sm btn-info float-right">Ver Todas las Tareas</a>
-              </div>
-            </div>
+      <div class="card-tools">
+        <button type="button" class="btn btn-dark" data-card-widget="collapse">
+          <i class="fas fa-minus"></i>
+        </button>&nbsp;
+        <button type="button" class="btn btn-dark" data-card-widget="remove">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    </div>
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table m-0">
+          <thead>
+            <tr>
+              <th>Título</th>
+              <th>Estado</th>
+              <th>Fecha vencimiento</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let tarea of tareas.slice(tareas.length - 3)">
+              <td>{{tarea.titulo_tarea}}</td>
+              <td><span [ngClass]="{'badge bg-dark': tarea.estado === 'No comenzada', 'badge bg-green': tarea.estado !== 'No comenzada'}">
+            {{tarea.estado}}
+          </span></td>
+              <td><span class="badge bg-gradient-indigo">{{tarea.fecha_vencim}}</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card-footer clearfix">
+      <a [routerLink]="['/empleado/tareas']" class="btn btn-sm btn-info float-right">Ver Todas las Tareas</a>
+    </div>
+  </div>
 </div>
 
 <!-- Modal para agregar un nuevo amigo-->
-<div
-  class="modal fade"
-  id="AmigoModal"
-  tabindex="-1"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
+<div class="modal fade" id="AmigoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="exampleModalLabel">
           Entablar nueva amistad
         </h1>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <h2>¿Quieres hacerte amigo de {{ nombreAmigo }}?</h2>
@@ -165,33 +143,19 @@
 </div>
 
 <!-- Modal para el chat-->
-<div
-  class="modal fade"
-  id="ChatModal"
-  tabindex="-1"
-  aria-labelledby="chatModal"
-  aria-hidden="true"
->
+<div class="modal fade" id="ChatModal" tabindex="-1" aria-labelledby="chatModal" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5">Chat con {{ user.name }}</h1>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <ul>
-          <li
-            *ngFor="let mensaje of mensajes"
-            [ngClass]="{
+          <li *ngFor="let mensaje of mensajes" [ngClass]="{
               me: mensaje.id_autor.toString() === id.toString(),
               notMe: mensaje.id_autor.toString() !== id.toString()
-            }"
-          >
+            }">
             <div class="mensaje">
               <div class="contenido">
                 <p>{{ mensaje.mensaje }}</p>
@@ -207,20 +171,10 @@
         <div class="form-group mensaje">
           <form class="form-horizontal" [formGroup]="mensajeForm">
             <label for="mensaje">Escribe un mensaje:</label>
-            <input
-              type="text"
-              class="form-control"
-              id="mensaje"
-              name="mensaje"
-              formControlName="mensaje"
-            />
+            <input type="text" class="form-control" id="mensaje" name="mensaje" formControlName="mensaje" />
             <br />
             <div>
-              <button
-                type="button"
-                class="btn btn-success btnchat"
-                (click)="enviarMensaje()"
-              >
+              <button type="button" class="btn btn-success btnchat" (click)="enviarMensaje()">
                 Enviar Mensaje
               </button>
             </div>

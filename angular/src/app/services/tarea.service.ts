@@ -48,6 +48,10 @@ export class TareaService {
     return this.http.post(this.baseUrl + 'updateTarea/' + id, form);
   }
 
+  public changeStatus(id: any, form: any) {
+    return this.http.post(this.baseUrl + "changeStatus/" + id, form);
+  }
+
   public deleteTarea(id: any) {
     return this.http.delete(this.baseUrl + "deleteTarea/" + id);
   }
