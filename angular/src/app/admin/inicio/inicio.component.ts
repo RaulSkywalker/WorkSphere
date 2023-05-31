@@ -17,6 +17,11 @@ export class InicioComponent implements OnInit {
   editForm: FormGroup;
   empleados: empleadoModel[] = [];
   idSeleccionado: any;
+  paginaActual = 1;
+  tamanioPag = 5;
+  paginasTotales: any;
+  busqueda: string = '';
+  tareasFiltradas: any[] = [];
 
   constructor(
     private tarSer: TareaService,
@@ -49,6 +54,11 @@ export class InicioComponent implements OnInit {
     this.tarSer.getTareas().subscribe(
       (response) => {
         this.tareas = response;
+        this.tareasFiltradas = this.tareas;
+        this.paginasTotales = Math.ceil(
+          this.tareasFiltradas.length / this.tamanioPag
+        );
+        this.paginarTareas();
       },
       (error) => {
         console.log(error);
@@ -121,7 +131,7 @@ export class InicioComponent implements OnInit {
       id_empleado: tarea.id_empleado,
     });
   }
-  
+
   editarTarea() {
     const tareaId = this.idSeleccionado;
     const formData = new FormData();
@@ -135,32 +145,32 @@ export class InicioComponent implements OnInit {
     formData.append('id_empleado', this.editForm.get('id_empleado')?.value);
 
     this.tarSer.updateTarea(tareaId, formData).subscribe(
-        (response) => {
-          this.tarSer.getTareas().subscribe(
-            (response) => {
-              this.tareas = response;
-            },
-            (error) => {
-              console.log(error);
-            }
-          );
+      (response) => {
+        this.tarSer.getTareas().subscribe(
+          (response) => {
+            this.tareas = response;
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
 
-          document.getElementById('EditModal')?.classList.remove('show');
-          document.body.classList.remove('modal-open');
-          document.body.style.removeProperty('padding-right');
-          const modalBackdrop =
-            document.getElementsByClassName('modal-backdrop')[0];
-          modalBackdrop.parentNode?.removeChild(modalBackdrop);
+        document.getElementById('EditModal')?.classList.remove('show');
+        document.body.classList.remove('modal-open');
+        document.body.style.removeProperty('padding-right');
+        const modalBackdrop =
+          document.getElementsByClassName('modal-backdrop')[0];
+        modalBackdrop.parentNode?.removeChild(modalBackdrop);
 
-          toastr.success('Tarea editada con éxito');
-        },
-        (error) => {
-          console.log(error);
+        toastr.success('Tarea editada con éxito');
+      },
+      (error) => {
+        console.log(error);
 
-          toastr.error('Error al editar la tarea');
-        }
-      );
-    }
+        toastr.error('Error al editar la tarea');
+      }
+    );
+  }
 
   marcarParaEliminar(id: any) {
     this.idSeleccionado = id;
@@ -193,5 +203,45 @@ export class InicioComponent implements OnInit {
         toastr.error('Error al eliminar la tarea');
       }
     );
+  }
+
+  buscar() {
+    if (this.busqueda.trim() !== '') {
+      this.tareasFiltradas = this.tareas.filter((tarea) =>
+        tarea.titulo_tarea.toLowerCase().includes(this.busqueda.toLowerCase())
+      );
+    } else {
+      this.tareasFiltradas = this.tareas;
+    }
+  }
+
+  /**
+   * Este método se encarga de generar el numero de páginas total para la lista de empleados.
+   * @returns paginas
+   */
+  generarPaginacion() {
+    const paginas = [];
+    for (let i = 1; i <= this.paginasTotales; i++) {
+      paginas.push(i);
+    }
+    return paginas;
+  }
+
+  /**
+   * Método encargado de realizar la paginación para el listado de empleados.
+   */
+  paginarTareas(): void {
+    const inicio = (this.paginaActual - 1) * this.tamanioPag;
+    const fin = inicio + this.tamanioPag;
+    this.tareas = this.tareas.slice(inicio, fin);
+  }
+
+  /**
+   * Método encargado de cambiar de página, y volver a paginar.
+   * @param numPagina
+   */
+  onCambioPagina(numPagina: number): void {
+    this.paginaActual = numPagina;
+    this.paginarTareas();
   }
 }

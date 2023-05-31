@@ -2,6 +2,10 @@
     <h2 style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">Bienvenido, Administrador.</h2>
 </div>
 <div class="tareas col-8">
+    <div class="search-bar" style="display: flex; justify-content: center; margin: 10px;">
+  <input type="text" [(ngModel)]="busqueda" (input)="buscar()" placeholder="Buscar por título de tarea" style="border-radius: 15px; height: 40px; width: 500px; background-color: darksalmon; padding: 5px;">
+</div>
+<br>
     <h2>LISTADO DE TAREAS & PROYECTOS DE LA EMPRESA:</h2>
 <button data-bs-toggle="modal" data-bs-target="#AddModal" class="col-12 btn btn-secondary"><i
                       class="fas fa-plus-circle"></i> AÑADIR UNA NUEVA TAREA <i
@@ -17,7 +21,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let tarea of tareas">
+            <tr *ngFor="let tarea of tareasFiltradas">
                 <td>{{tarea.titulo_tarea}}</td>
                 <td><span [ngClass]="{'badge bg-dark': tarea.estado === 'No comenzada', 'badge bg-green': tarea.estado !== 'No comenzada'}">
             {{tarea.estado}}
@@ -35,7 +39,17 @@
                 </td>
             </tr>
         </tbody>
-
+        <div class="card-footer p-0">
+        <div class="mailbox-controls col-12" style="display: flex;">
+          <div class="card-tools" style="justify-content: center;">
+            <ul class="pagination pagination-sm">
+              <li class="page-item" *ngFor="let page of generarPaginacion()" [class.active]="paginaActual === page">
+                <a class="page-link" (click)="onCambioPagina(page)">{{ page }}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </table>
 </div>
 </div>

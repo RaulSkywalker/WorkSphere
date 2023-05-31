@@ -11,6 +11,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { InicioComponent } from './inicio/inicio.component';
 import { DepartamentosComponent } from './departamentos/departamentos.component';
 import { ProfileComponent } from './profile/profile.component';
+import { FormsModule } from '@angular/forms';
+
 
 
 @NgModule({
@@ -22,12 +24,8 @@ import { ProfileComponent } from './profile/profile.component';
     FooterComponent,
     InicioComponent,
     DepartamentosComponent,
-    ProfileComponent
+    ProfileComponent,
   ],
-  imports: [
-    CommonModule,
-    AdminRoutingModule,
-    ReactiveFormsModule
-  ]
+  imports: [CommonModule, AdminRoutingModule, ReactiveFormsModule, FormsModule],
 })
-export class AdminModule { }
+export class AdminModule {}

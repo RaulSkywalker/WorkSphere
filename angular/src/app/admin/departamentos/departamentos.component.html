@@ -37,7 +37,7 @@
 <div class="modal fade" id="DetailsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header" style="background-color: darkslateblue; color: white;">
         <h1 class="modal-title fs-5" id="exampleModalLabel">
           {{ departamento?.nombre_departamento }}
         </h1>
@@ -48,11 +48,13 @@
       </div>
       <div class="modal-body">
   <p>{{ departamento.descripcion }}</p>
-  <h6>Miembros del departamento:</h6>
+  <div style="background-color: grey; padding: 10px; border-radius: 15px;">
+    <h6>Miembros del departamento:</h6>
   <ul *ngIf="empleadosDelDepartamento && empleadosDelDepartamento.length > 0" style="list-style: none;">
     <li *ngFor="let empleado of empleadosDelDepartamento">{{ empleado.nombre }} {{ empleado.apellido }}</li>
   </ul>
   <p *ngIf="!empleadosDelDepartamento || empleadosDelDepartamento.length === 0">No hay empleados en este departamento actualmente.</p>
+  </div>
 </div>
       <div class="modal-footer">
       </div>

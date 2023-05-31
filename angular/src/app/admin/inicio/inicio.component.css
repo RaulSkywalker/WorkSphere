@@ -20,3 +20,7 @@ tr {
     background-color: darkslategray;
     color: white;
 }
+
+.search-bar ::placeholder{
+    color: black;
+}
