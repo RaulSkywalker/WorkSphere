@@ -54,7 +54,7 @@ export class TareasComponent implements OnInit {
 
     this.tarSer.changeStatus(tareaId, formData).subscribe(
       (response) => {
-        this.tarSer.getTareas().subscribe(
+        this.tarSer.getTareasByEmpleado(this.id - 1).subscribe(
           (response) => {
             this.tareas = response;
           },
