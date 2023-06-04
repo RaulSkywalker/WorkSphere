@@ -1,43 +1,23 @@
 <form [formGroup]="registerForm" class="form-horizontal">
   <div class="form-group">
-    <label class="form-label required" for="name">Introduce tu Nombre</label>
+    <label for="name">Introduce tu Nombre</label>
     <span class="required-indicator" style="color: red">*</span>
-    <input
-      type="name"
-      class="form-control"
-      id="name"
-      formControlName="name"
-      placeholder="Tu Nombre"
-    />
+    <input type="text" class="form-control" id="name" formControlName="name" placeholder="Tu Nombre" />
     <div
-      *ngIf="
-        registerForm.get('name').invalid &&
-        (registerForm.get('name').dirty || registerForm.get('name').touched)
-      "
-    >
-      <div *ngIf="registerForm.get('name').errors['required']">
-        El nombre es requerido.
-      </div>
+      *ngIf="registerForm.get('name').invalid && (registerForm.get('name').dirty || registerForm.get('name').touched)">
+      <div *ngIf="registerForm.get('name').errors['required']">El nombre es requerido.</div>
     </div>
   </div>
   <div class="form-group">
-    <label for="name">Introduce tus Apellidos</label>
+    <label for="apellido">Introduce tus Apellidos</label>
     <span class="required-indicator" style="color: red">*</span>
 
-    <input
-      type="name"
-      class="form-control"
-      id="apellido"
-      formControlName="apellido"
-      placeholder="Tus Apellidos"
-    />
-    <div
-      *ngIf="
+    <input type="text" class="form-control" id="apellido" formControlName="apellido" placeholder="Tus Apellidos" />
+    <div *ngIf="
         registerForm.get('apellido').invalid &&
         (registerForm.get('apellido').dirty ||
           registerForm.get('apellido').touched)
-      "
-    >
+      ">
       <div *ngIf="registerForm.get('apellido').errors['required']">
         Los apellidos son requeridos.
       </div>
@@ -47,19 +27,11 @@
     <label for="email">Introduce tu Email</label>
     <span class="required-indicator" style="color: red">*</span>
 
-    <input
-      type="email"
-      class="form-control"
-      id="email"
-      placeholder="example@example.com"
-      formControlName="email"
-    />
-    <div
-      *ngIf="
+    <input type="email" class="form-control" id="email" placeholder="example@example.com" formControlName="email" />
+    <div *ngIf="
         registerForm.get('email').invalid &&
         (registerForm.get('email').dirty || registerForm.get('email').touched)
-      "
-    >
+      ">
       <div *ngIf="registerForm.get('email').errors['required']">
         El email es requerido.
       </div>
@@ -72,19 +44,11 @@
     <label for="pass">Introduce una Contraseña</label>
     <span class="required-indicator" style="color: red">*</span>
 
-    <input
-      type="password"
-      class="form-control"
-      id="pass"
-      placeholder="Crea una Contraseña"
-      formControlName="pass"
-    />
-    <div
-      *ngIf="
+    <input type="password" class="form-control" id="pass" placeholder="Crea una Contraseña" formControlName="pass" />
+    <div *ngIf="
         registerForm.get('pass').invalid &&
         (registerForm.get('pass').dirty || registerForm.get('pass').touched)
-      "
-    >
+      ">
       <div *ngIf="registerForm.get('pass').errors['required']">
         La contraseña es requerida.
       </div>
@@ -94,19 +58,11 @@
     <label for="rpass">Repite la Contraseña</label>
     <span class="required-indicator" style="color: red">*</span>
 
-    <input
-      type="password"
-      class="form-control"
-      id="rpass"
-      placeholder="Repite la Contraseña"
-      formControlName="rpass"
-    />
-    <div
-      *ngIf="
+    <input type="password" class="form-control" id="rpass" placeholder="Repite la Contraseña" formControlName="rpass" />
+    <div *ngIf="
         registerForm.get('rpass').invalid &&
         (registerForm.get('rpass').dirty || registerForm.get('rpass').touched)
-      "
-    >
+      ">
       <div *ngIf="registerForm.get('rpass').errors['required']">
         Debes repetir la contraseña.
       </div>
@@ -116,66 +72,46 @@
     <label for="name">Introduce tu Teléfono</label>
     <span class="required-indicator" style="color: red">*</span>
 
-    <input
-      type="name"
-      class="form-control"
-      id="telefono"
-      formControlName="telefono"
-      placeholder="Tu Número de Teléfono"
-    />
-    <div
-      *ngIf="
+    <input type="number" class="form-control" id="telefono" formControlName="telefono"
+      placeholder="Tu Número de Teléfono" />
+    <div *ngIf="
         registerForm.get('telefono').invalid &&
         (registerForm.get('telefono').dirty ||
           registerForm.get('telefono').touched)
-      "
-    >
+      ">
       <div *ngIf="registerForm.get('telefono').errors['required']">
         El teléfono es requerido.
       </div>
     </div>
   </div>
   <div class="form-group">
-    <label for="name">Introduce tu Fecha de Nacimiento</label>
+    <label for="name">Introduce tu Fecha de Nacimiento (Debes tener más de 18 años)</label>
     <span class="required-indicator" style="color: red">*</span>
 
-    <input
-      type="date"
-      class="form-control"
-      id="fecha_nacim"
-      formControlName="fecha_nacim"
-    />
-    <div
-      *ngIf="
-        registerForm.get('fecha_nacim').invalid &&
-        (registerForm.get('fecha_nacim').dirty ||
-          registerForm.get('fecha_nacim').touched)
-      "
-    >
+    <input type="date" class="form-control" id="fecha_nacim" formControlName="fecha_nacim" />
+    <div *ngIf="
+  registerForm.get('fecha_nacim').invalid &&
+  (registerForm.get('fecha_nacim').dirty ||
+    registerForm.get('fecha_nacim').touched)
+">
       <div *ngIf="registerForm.get('fecha_nacim').errors['required']">
         La fecha de nacimiento es requerida.
+      </div>
+      <div *ngIf="registerForm.get('fecha_nacim').errors['edadMinima']">
+        Debes tener al menos 18 años de edad.
       </div>
     </div>
   </div>
   <div class="form-group">
-    <label for="name"
-      >Introduce la Fecha en la que te incorporaste a la Empresa</label
-    >
+    <label for="name">Introduce la Fecha en la que te incorporaste a la Empresa</label>
     <span class="required-indicator" style="color: red">*</span>
 
-    <input
-      type="date"
-      class="form-control"
-      id="fecha_incorp"
-      formControlName="fecha_incorp"
-    />
-    <div
-      *ngIf="
+    <input type="date" class="form-control" id="fecha_incorp" formControlName="fecha_incorp" />
+    <div *ngIf="
         registerForm.get('fecha_incorp').invalid &&
         (registerForm.get('fecha_incorp').dirty ||
           registerForm.get('fecha_incorp').touched)
-      "
-    >
+      ">
       <div *ngIf="registerForm.get('fecha_incorp').errors['required']">
         La fecha de incorporación es requerida.
       </div>
@@ -185,11 +121,7 @@
     <label for="name">Selecciona el Departamento del que formas parte</label>
     <span class="required-indicator" style="color: red">*</span>
 
-    <select
-      class="form-control"
-      id="id_departamento"
-      formControlName="id_departamento"
-    >
+    <select class="form-control" id="id_departamento" formControlName="id_departamento">
       <option value="1">Recursos Humanos</option>
       <option value="2">Finanzas</option>
       <option value="3">Marketing</option>
@@ -198,13 +130,11 @@
       <option value="6">Ventas</option>
       <option value="7">Legal</option>
     </select>
-    <div
-      *ngIf="
+    <div *ngIf="
         registerForm.get('id_departamento').invalid &&
         (registerForm.get('id_departamento').dirty ||
           registerForm.get('id_departamento').touched)
-      "
-    >
+      ">
       <div *ngIf="registerForm.get('id_departamento').errors['required']">
         Debes seleccionar un departamento.
       </div>
@@ -216,30 +146,17 @@
 
     <div class="row">
       <div class="col-md-3">
-        <img
-          class="img-thumbnail"
-          id="AddUserImage"
-          style="width: 100px; height: 100px"
-          src="../../../favicon.ico"
-        />
+        <img class="img-thumbnail" id="AddUserImage" style="width: 100px; height: 100px" src="../../../favicon.ico" />
       </div>
       <div class="col-md-9">
-        <input
-          id="image"
-          type="file"
-          style="margin-left: 10px"
-          (change)="onSelectImage($event)"
-          accept="image/*"
-          placeholder="Seleccione una imagen"
-        />
+        <input id="image" type="file" style="margin-left: 10px" (change)="onSelectImage($event)" accept="image/*"
+          placeholder="Seleccione una imagen" />
       </div>
     </div>
-    <div
-      *ngIf="
+    <div *ngIf="
         registerForm.get('image').invalid &&
         (registerForm.get('image').dirty || registerForm.get('image').touched)
-      "
-    >
+      ">
       <div *ngIf="registerForm.get('image').errors['required']">
         Debes escoger una imagen.
       </div>

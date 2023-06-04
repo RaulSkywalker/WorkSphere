@@ -30,7 +30,10 @@ export class DregistrationComponent {
       pass: new FormControl('', Validators.required),
       rpass: new FormControl('', Validators.required),
       telefono: new FormControl('', Validators.required),
-      fecha_nacim: new FormControl('', Validators.required),
+      fecha_nacim: new FormControl('', [
+        Validators.required,
+        this.validarEdadMinima,
+      ]),
       fecha_incorp: new FormControl('', Validators.required),
       id_departamento: new FormControl('', Validators.required),
     });
@@ -80,6 +83,20 @@ export class DregistrationComponent {
         toastr.error('Debes rellenar todos los campos.');
       }
     }
+  }
+
+  validarEdadMinima(control: FormControl): { [key: string]: any } | null {
+    const fechaNacimiento = new Date(control.value);
+    const edadMinima = 18;
+    const hoy = new Date();
+    const edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
+
+    if (edad < edadMinima) {
+      return { edadMinima: true };
+    }
+
+
+    return null;
   }
 
   /**

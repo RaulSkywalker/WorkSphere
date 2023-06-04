@@ -6,20 +6,17 @@
   </div>
 </section>
 <div class="col-md-3" style="margin-left:25%">
-  <div class="card card-outline" style="width: 200%; background-color: rgb(107, 140, 211); border: 5px solid rgb(22, 78, 198); border-radius: 15px; box-shadow: 7px 7px black;">
+  <div class="card card-outline"
+    style="width: 200%; background-color: rgb(107, 140, 211); border: 5px solid rgb(22, 78, 198); border-radius: 15px; box-shadow: 7px 7px black;">
     <div class="card-body box-profile">
       <div class="text-center">
-        <img
-          class="profile-user-img img-fluid img-circle"
-          src="{{ user.imgpath }}"
-          alt="User profile picture"
-          style="width: 20%; height: 20%px;"
-        />
+        <img class="profile-user-img img-fluid img-circle" src="{{ user.imgpath }}" alt="User profile picture"
+          style="width: 20%; height: 20%px;" />
       </div>
       <h3 class="profile-username text-center">{{ user.name }}</h3>
       <h6 class="profile-username text-center" style="font-weight: lighter; font-style: italic;">{{user.role}}</h6>
 
-      <ul class="list-group list-group-unbordered mb-3" >
+      <ul class="list-group list-group-unbordered mb-3">
         <li class="list-group-item" style="background-color: rgb(107, 140, 211);">
           <b>Amigos en WorkSphere:</b>
           <a class="float-right">{{ numAmigos }}</a>
@@ -28,14 +25,9 @@
           <b>Usuario de WorkSphere desde:</b>
           <a class="float-right">{{ fechaFormateada }}</a>
         </li>
-        <li
-          class="list-group-item"
-          style="display: flex; justify-content: space-between; background-color: rgb(107, 140, 211);"
-        >
-          <a
-            (click)="logout()"
-            class="nav-link active"
-            style="
+        <li class="list-group-item"
+          style="display: flex; justify-content: space-between; background-color: rgb(107, 140, 211);">
+          <a (click)="logout()" class="nav-link active" style="
               background-color: rgb(163, 15, 15);
               width: 150px;
               border-radius: 30px;
@@ -44,16 +36,11 @@
               text-align: center;
               height: 50px;
               color: white;
-            "
-          >
+            ">
             <p>Cerrar sesión</p>
           </a>
 
-          <a
-            data-bs-toggle="modal"
-            data-bs-target="#UpdateModal"
-            class="nav-link active"
-            style="
+          <a data-bs-toggle="modal" data-bs-target="#UpdateModal" class="nav-link active" style="
               background-color: rgb(25, 138, 17);
               width: 150px;
               border-radius: 30px;
@@ -62,17 +49,11 @@
               text-align: center;
               height: 50px;
               color: white;
-            "
-          >
+            ">
             <p>Editar mi usuario</p>
           </a>
 
-          <a
-            class="nav-link active"
-            style="float: right"
-            data-bs-toggle="modal"
-            data-bs-target="#DeleteModal"
-            style="
+          <a class="nav-link active" style="float: right" data-bs-toggle="modal" data-bs-target="#DeleteModal" style="
               background-color: rgb(255, 204, 0);
               width: 150px;
               border-radius: 30px;
@@ -80,8 +61,7 @@
               padding: 10px;
               text-align: center;
               height: 50px;
-            "
-          >
+            ">
             <p>Borrar mi cuenta</p>
           </a>
         </li>
@@ -91,59 +71,33 @@
 </div>
 
 <!-- Modal para actualizar los datos del usuario-->
-<div
-  class="modal fade"
-  id="UpdateModal"
-  tabindex="-1"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
+<div class="modal fade" id="UpdateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="exampleModalLabel">
           Modificar información de usuario
         </h1>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form [formGroup]="updateForm" class="form-horizontal">
           <div class="container-fluid">
             <div class="row">
               <div class="col-md-3">
-                <img
-                  class="img-thumbnail"
-                  id="AddUserImage"
-                  style="width: 100px; height: 100px"
-                  src="{{ user.imgpath }}"
-                />
+                <img class="img-thumbnail" id="AddUserImage" style="width: 100px; height: 100px"
+                  src="{{ user.imgpath }}" />
               </div>
               <div class="col-md-9">
-                <input
-                  id="image"
-                  type="file"
-                  style="margin-left: 10px"
-                  (change)="onSelectImage($event)"
-                  accept="image/*"
-                  placeholder="Seleccione una imagen"
-                />
+                <input id="image" type="file" style="margin-left: 10px" (change)="onSelectImage($event)"
+                  accept="image/*" placeholder="Seleccione una imagen" />
               </div>
             </div>
             <br />
             <label>Nombre de usuario:</label>
             <div class="row">
-              <input
-                type="text"
-                id="uname"
-                class="form-control"
-                formControlName="uname"
-                placeholder="{{ user.name }}"
-              />
+              <input type="text" id="uname" class="form-control" formControlName="uname"
+                placeholder="{{ user.name }}" />
             </div>
           </div>
         </form>
@@ -161,25 +115,14 @@
 </div>
 
 <!-- Modal eliminar usuario-->
-<div
-  class="modal fade"
-  id="DeleteModal"
-  tabindex="-1"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
+<div class="modal fade" id="DeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="exampleModalLabel">
           Borrar tu cuenta
         </h1>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <h2>¿Seguro que quieres eliminar tu cuenta de WorkSphere?</h2>

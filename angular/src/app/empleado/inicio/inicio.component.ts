@@ -78,7 +78,7 @@ export class InicioComponent implements OnInit {
       this.amigoIds = response.map((amigo: any) => amigo.id);
     });
 
-    this.tarSer.getTareasByEmpleado(this.id-1).subscribe(
+    this.tarSer.getTareasByEmpleado(this.id - 1).subscribe(
       (response) => {
         this.tareas = response;
       },

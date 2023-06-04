@@ -13,14 +13,6 @@ export class EmpleadoService {
     this.getEmpleados('');
   }
 
-  public add(form: any) {
-    return this.http.post(this.baseUrl + 'add', form);
-  }
-
-  public update(form: any) {
-    return this.http.post(this.baseUrl + 'update', form);
-  }
-
   /**
    * Accede a la API para eliminar un empleado de la base de datos.
    * @param id

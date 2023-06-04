@@ -1,121 +1,131 @@
-<div style="display: flex; justify-content: center">
-  <img src="../../../assets/logo_banner.png" style="height: 100px" />
-</div>
-<hr />
-<div style="display: flex">
-  <div class="col-3" style="float: left">
-    <h3>Tu Departamento:</h3>
-    <div class="info-box mb-3 bg-info">
-      <span class="info-box-icon"><i class="fab fa-elementor"></i></span>
-
-      <div class="info-box-content">
-        <span class="info-box-text text-center" style="font-size: xx-large">{{
-          empleado.nombre_dep
-          }}</span>
-      </div>
-    </div>
+<div class="container">
+  <div style="display: flex; justify-content: center">
+    <img src="../../../assets/logo_banner.png" style="height: 100px" />
   </div>
-  <div class="col-lg-3 col-6" style="float: left">
-    <div class="small-box bg-warning">
-      <div class="inner">
-        <h3>{{ numAmigos }}</h3>
+  <hr />
+  <div class="row" style="display: flex;">
+    <div class="col-3 departamento" style="float: left; margin-right: 40%;">
+      <h3>Tu Departamento:</h3>
+      <div class="info-box mb-3 bg-info">
+        <span class="info-box-icon"><i class="fab fa-elementor"></i></span>
 
-        <p>Tus Amigos de WorkSphere</p>
-      </div>
-      <div class="icon">
-        <i class="fas fa-user-plus"></i>
-      </div>
-      <a [routerLink]="['/empleado/amigos']" class="small-box-footer">
-        Ver amigos <i class="fas fa-arrow-circle-right"></i>
-      </a>
-    </div>
-  </div>
-
-  <div class="col-md-6 users" style="float: right">
-    <div class="card">
-      <div class="card-header">
-        <h3 class="card-title">Otros Usuarios de WorkSphere:</h3>
-
-        <div class="card-tools">
+        <div class="info-box-content">
+          <span class="info-box-text text-center" style="font-size: xx-large">{{
+            empleado.nombre_dep
+            }}</span>
         </div>
       </div>
-      <div class="card-body p-0">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let user of users">
-              <td>{{ user.name }}</td>
-              <td>
-                <button type="button" (click)="entablarAmistad(id, user.id, user.name)" class="btn btn-default btn-sm"
-                  data-bs-toggle="modal" data-bs-target="#AmigoModal" [disabled]="esAmigo(user.id)">
-                  <i class="fas fa-plus"></i>
-                </button>
-                <button type="button" class="btn btn-default btn-sm" data-bs-toggle="modal" data-bs-target="#ChatModal"
-                  (click)="mostrarChat(user.id)">
-                  <i class="fas fa-comment"></i>
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="card-footer">
-        <ul class="pagination pagination-sm float-right">
-          <li class="page-item" *ngFor="let page of generarPaginacion()" [class.active]="paginaActual === page">
-            <a class="page-link" (click)="onCambioPagina(page)">{{ page }}</a>
-          </li>
-        </ul>
+    </div>
+    <div class="col-lg-3 col-6" style="float: right">
+      <div class="small-box bg-warning">
+        <div class="inner">
+          <h3>{{ numAmigos }}</h3>
+
+          <p>Tus Amigos de WorkSphere</p>
+        </div>
+        <div class="icon">
+          <i class="fas fa-user-plus"></i>
+        </div>
+        <a [routerLink]="['/empleado/amigos']" class="small-box-footer">
+          Ver amigos <i class="fas fa-arrow-circle-right"></i>
+        </a>
       </div>
     </div>
   </div>
-</div>
+  <div style="display: flex;">
 
-<div class="lower-part col-5">
-  <div class="card">
-    <div class="card-header border-transparent">
-      <h2 class="card-title">Mis Tareas</h2>
 
-      <div class="card-tools">
-        <button type="button" class="btn btn-dark" data-card-widget="collapse">
-          <i class="fas fa-minus"></i>
-        </button>&nbsp;
-        <button type="button" class="btn btn-dark" data-card-widget="remove">
-          <i class="fas fa-times"></i>
-        </button>
+    <div class="col-md-6 users" style="float: left">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Otros Usuarios de WorkSphere:</h3>
+
+          <div class="card-tools">
+          </div>
+        </div>
+        <div class="card-body p-0">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of users">
+                <td>{{ user.name }}</td>
+                <td>
+                  <button type="button" (click)="entablarAmistad(id, user.id, user.name)" class="btn btn-default btn-sm"
+                    data-bs-toggle="modal" data-bs-target="#AmigoModal" [disabled]="esAmigo(user.id)">
+                    <i class="fas fa-plus"></i>
+                  </button>
+                  <button type="button" class="btn btn-default btn-sm" data-bs-toggle="modal"
+                    data-bs-target="#ChatModal" (click)="mostrarChat(user.id)">
+                    <i class="fas fa-comment"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer">
+          <ul class="pagination pagination-sm float-right">
+            <li class="page-item" *ngFor="let page of generarPaginacion()" [class.active]="paginaActual === page">
+              <a class="page-link" (click)="onCambioPagina(page)">{{ page }}</a>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
-    <div class="card-body p-0">
-      <div class="table-responsive">
-        <table class="table m-0">
-          <thead>
-            <tr>
-              <th>Título</th>
-              <th>Estado</th>
-              <th>Fecha vencimiento</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let tarea of tareas.slice(tareas.length - 3)">
-              <td>{{tarea.titulo_tarea}}</td>
-              <td><span [ngClass]="{'badge bg-dark': tarea.estado === 'No comenzada', 'badge bg-green': tarea.estado !== 'No comenzada'}">
-            {{tarea.estado}}
-          </span></td>
-              <td><span class="badge bg-gradient-indigo">{{tarea.fecha_vencim}}</span></td>
-            </tr>
-          </tbody>
-        </table>
+
+    <div class="lower-part col-5">
+      <div class="card tareas" style="width: 100%;">
+        <div class="card-header border-transparent">
+          <h2 class="card-title">Mis Tareas</h2>
+
+          <div class="card-tools">
+            <button type="button" class="btn btn-dark" data-card-widget="collapse">
+              <i class="fas fa-minus"></i>
+            </button>&nbsp;
+            <button type="button" class="btn btn-dark" data-card-widget="remove">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table m-0">
+              <thead>
+                <tr>
+                  <th>Título</th>
+                  <th>Estado</th>
+                  <th>Fecha vencimiento</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let tarea of tareas.slice(tareas.length - 3)">
+                  <td>{{tarea.titulo_tarea}}</td>
+                  <td><span
+                      [ngClass]="{'badge bg-dark': tarea.estado === 'No comenzada', 'badge bg-green': tarea.estado !== 'No comenzada'}">
+                      {{tarea.estado}}
+                    </span></td>
+                  <td><span class="badge bg-gradient-indigo">{{tarea.fecha_vencim}}</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card-footer clearfix">
+          <a [routerLink]="['/empleado/tareas']" class="btn btn-sm btn-info float-right">Ver Todas las Tareas</a>
+        </div>
       </div>
     </div>
-    <div class="card-footer clearfix">
-      <a [routerLink]="['/empleado/tareas']" class="btn btn-sm btn-info float-right">Ver Todas las Tareas</a>
-    </div>
+
   </div>
 </div>
+
+
+
 
 <!-- Modal para agregar un nuevo amigo-->
 <div class="modal fade" id="AmigoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -173,7 +183,7 @@
           <form class="form-horizontal" [formGroup]="mensajeForm">
             <label for="mensaje">Escribe un mensaje:</label>
             <input type="text" class="form-control" id="mensaje" name="mensaje" formControlName="mensaje" style="background-color: #075E54;
-              color: white;" placeholder="Mensaje"/>
+              color: white;" placeholder="Mensaje" />
             <br />
             <div style="display: flex; justify-content: center;">
               <button type="button" class="btn bg-gradient-green btnchat" (click)="enviarMensaje()">

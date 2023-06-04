@@ -65,7 +65,9 @@ export class InicioComponent implements OnInit {
       }
     );
   }
-
+  /**
+   * Método encargado de añadir una nueva tarea para un empleado.
+   */
   addTarea() {
     const formData = new FormData();
     formData.append('titulo_tarea', this.addForm.get('title')?.value);
@@ -107,6 +109,11 @@ export class InicioComponent implements OnInit {
     });
   }
 
+  /**
+   * Método encargado de traer todos los datos de la tarea en
+   * la cual se ha clicado para ver sus detalles.
+   * @param id
+   */
   verDetallesTarea(id: any) {
     this.tarea = null;
     this.tarSer.getTarea(id).subscribe((response) => {
@@ -119,10 +126,18 @@ export class InicioComponent implements OnInit {
     });
   }
 
+  /**
+   * Señala una tarea para indicarle que se van a editar sus datos.
+   * @param id
+   */
   marcarParaEditar(id: any) {
     this.idSeleccionado = id;
   }
 
+  /**
+   * Trae los datos actuales de la tarea al formulario de edición.
+   * @param tarea
+   */
   fillEditForm(tarea: any): void {
     this.editForm.patchValue({
       title: tarea.titulo_tarea,
@@ -132,6 +147,9 @@ export class InicioComponent implements OnInit {
     });
   }
 
+  /**
+   * Método encargado de modificar los datos de la tarea.
+   */
   editarTarea() {
     const tareaId = this.idSeleccionado;
     const formData = new FormData();
@@ -172,10 +190,17 @@ export class InicioComponent implements OnInit {
     );
   }
 
+  /**
+   * Señala una tarea para indicarle que se va a ser eliminada.
+   * @param id
+   */
   marcarParaEliminar(id: any) {
     this.idSeleccionado = id;
   }
 
+  /**
+   * Método que procede a acceder a la API para eliminar la tarea.
+   */
   eliminarTarea() {
     this.tarSer.deleteTarea(this.idSeleccionado).subscribe(
       () => {
@@ -205,6 +230,10 @@ export class InicioComponent implements OnInit {
     );
   }
 
+  /**
+   * Método encargado de filtrar en la tabla, las tareas 
+   * según lo que se ha escrito en la barra de búsqueda.
+   */
   buscar() {
     if (this.busqueda.trim() !== '') {
       this.tareasFiltradas = this.tareas.filter((tarea) =>

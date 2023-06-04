@@ -15,7 +15,7 @@ export class TareaService {
   }
 
   /**
-   * Accede a la API para traer los departamentos de la base de datos.
+   * Accede a la API para traer todas las tareas de la base de datos.
    * @param keys
    * @returns departamentos
    */
@@ -24,7 +24,7 @@ export class TareaService {
   }
 
   /**
-   * Accede a la API para traer un departamento del cual se ha especificado su id.
+   * Accede a la API para traer una tarea de la cual se ha especificado su id.
    * @param id
    * @returns departamento
    */
@@ -32,27 +32,46 @@ export class TareaService {
     return this.http.get(this.baseUrl + 'getTarea/' + id);
   }
 
+  /**
+   * Accede a la API para traer todas las tareas que tiene asignadas un empleado.
+   * @param id
+   * @returns
+   */
   public getTareasByEmpleado(id: any) {
     return this.http.get(this.baseUrl + 'getTareas/' + id);
   }
 
   /**
-   * Accede a la API para cambiar el gerente del departamento.
+   * Accede a la API para agregar una nueva tarea.
    * @param form
    */
   public addTarea(form: any) {
     return this.http.post(this.baseUrl + 'addTarea', form);
   }
 
+  /**
+   * Accede a la API para editar los detalles de una tarea.
+   * @param id
+   * @param form
+   */
   public updateTarea(id: any, form: any) {
     return this.http.post(this.baseUrl + 'updateTarea/' + id, form);
   }
 
+  /**
+   * Accede a la API para modificar el estado de una tarea.
+   * @param id
+   * @param form
+   */
   public changeStatus(id: any, form: any) {
-    return this.http.post(this.baseUrl + "changeStatus/" + id, form);
+    return this.http.post(this.baseUrl + 'changeStatus/' + id, form);
   }
 
+  /**
+   * Accede a la API para eliminar una tarea.
+   * @param id
+   */
   public deleteTarea(id: any) {
-    return this.http.delete(this.baseUrl + "deleteTarea/" + id);
+    return this.http.delete(this.baseUrl + 'deleteTarea/' + id);
   }
 }

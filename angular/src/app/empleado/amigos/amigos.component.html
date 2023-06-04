@@ -1,12 +1,14 @@
 <div class="container" style="text-align: center; display: flex; justify-content: space-between;">
   <div class="card col-3" *ngFor="let amigo of amigos"
     style="margin-top: 2%; text-align: center; border-radius: 15px; box-shadow: 9px 9px 4px black; background-color: aquamarine;">
-    <div class="card-header text-muted border-bottom-0" style="background-color: aquamarine;">
-    </div>
+    <div class="card-header text-muted border-bottom-0" style="background-color: aquamarine;"></div>
     <div class="card-body pt-0" style="display: flex; height: fit-content;">
       <div class="row" style="justify-content: center; background-color: aquamarine;">
         <div class="col-12">
-          <img src="{{ amigo.imgpath }}" style="width: 100px; height: 100px; border-radius: 50px;" />
+          <div *ngIf="amigo.name === 'Administrador'" class="circle-black"></div>
+          <div *ngIf="amigo.name !== 'Administrador'">
+            <img [src]="amigo.imgpath" style="width: 100px; height: 100px; border-radius: 50px;" />
+          </div>
           <h1 class="lead">
             <b>{{ amigo.name }}</b>
           </h1>
@@ -29,6 +31,8 @@
       </div>
     </div>
   </div>
+
+
 </div>
 
 <!-- Modal para eliminar una amistad-->
@@ -61,7 +65,6 @@
   <div class="modal-dialog">
     <div class="modal-content" style="border-radius: 50px;">
       <div class="modal-header" style="background-color: #075E54; color: white;">
-        <img src="{{ amigo.imgpath }}" style="width: 50px; height: 50px; border-radius: 50px;" />&nbsp;
         <h1 class="modal-title fs-5">{{ amigo.name }}</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>

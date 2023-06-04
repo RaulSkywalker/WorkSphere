@@ -14,8 +14,6 @@ import { EmpleadoService } from 'src/app/services/empleado.service';
 export class DepartamentosComponent implements OnInit {
   private baseUrl = 'http://localhost:8000/api/';
   departamentos: departamentoModel[] = [];
-  gerenteForm: FormGroup;
-  idEditar: any;
   departamentoSeleccionado: any = null;
   departamento: any = {};
   empleados: empleadoModel[] = [];
@@ -27,11 +25,6 @@ export class DepartamentosComponent implements OnInit {
     private fb: FormBuilder,
     private http: HttpClient
   ) {
-    this.idEditar = 0;
-
-    this.gerenteForm = this.fb.group({
-      id_gerente: ['', Validators.required],
-    });
   }
 
   ngOnInit(): void {
@@ -55,7 +48,7 @@ export class DepartamentosComponent implements OnInit {
 
   /**
    * Este método trae los datos de un departamento, al que se le ha pasado su id por parámetro.
-   * También va a la tabla de empleados y trae el nombre del gerente del departamento.
+   * También trae todos los empleados que forman parte del departamento.
    * @param id 
    */
   mostrar(id: number) {

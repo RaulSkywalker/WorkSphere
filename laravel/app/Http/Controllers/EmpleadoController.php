@@ -9,58 +9,6 @@ use Illuminate\Support\Facades\Validator;
 
 class EmpleadoController extends Controller
 {
-    public function anadirEmpleado(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'nombre' => 'required',
-            'apellido' => 'required',
-            'email' => 'required',
-            'telefono' => 'required',
-            'fecha_nacim' => 'required',
-            'fecha_incorp' => 'required',
-            'id_departamento' => 'required',
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()->all(), 409]);
-        }
-        $empleado = new Empleado();
-        $empleado->nombre = $request->nombre;
-        $empleado->apellido = $request->apellido;
-        $empleado->email = $request->email;
-        $empleado->telefono = $request->telefono;
-        $empleado->fecha_nacim = $request->fecha_nacim;
-        $empleado->fecha_incorp = $request->fecha_incorp;
-        $empleado->id_departamento = $request->id_departamento;
-        $empleado->save();
-    }
-
-    public function modificarEmpleado(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'id' => 'required',
-            'nombre' => 'required',
-            'apellido' => 'required',
-            'email' => 'required',
-            'telefono' => 'required',
-            'fecha_nacim' => 'required',
-            'fecha_incorp' => 'required',
-            'id_departamento' => 'required',
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['Error' => $validator->errors()->all()], 404);
-        }
-        $empleado = Empleado::find($request->id);
-        $empleado->nombre = $request->nombre;
-        $empleado->apellido = $request->apellido;
-        $empleado->email = $request->email;
-        $empleado->telefono = $request->telefono;
-        $empleado->fecha_nacim = $request->fecha_nacim;
-        $empleado->fecha_incorp = $request->fecha_incorp;
-        $empleado->id_departamento = $request->id_departamento;
-        $empleado->save();
-        return response()->json(['Mensaje' => 'Empleado actualizado correctamente']);
-    }
-
     /**
      * Función encargada de eliminar a un empleado de la base de datos, y al usuario asociado al empleado.
      */

@@ -18,12 +18,12 @@ export class TareasComponent implements OnInit {
   constructor(
     private tarSer: TareaService,
     private http: HttpClient,
-    private fb: FormBuilder) { 
-      this.editForm = this.fb.group({
-        estado: [''],
-      });
-    }
-  
+    private fb: FormBuilder) {
+    this.editForm = this.fb.group({
+      estado: [''],
+    });
+  }
+
   ngOnInit(): void {
     this.id = localStorage.getItem('userid');
     this.tarSer.getTareasByEmpleado(this.id - 1).subscribe(
@@ -36,6 +36,10 @@ export class TareasComponent implements OnInit {
     );
   }
 
+  /**
+   * Método encargado de traer todos los detalles de una tarea a la ventana modal.
+   * @param id 
+   */
   verDetallesTarea(id: any) {
     this.tarea = null;
     this.tarSer.getTarea(id).subscribe((response) => {
@@ -43,10 +47,17 @@ export class TareasComponent implements OnInit {
     });
   }
 
+  /**
+   * Establece el id de la tarea a la cual se le va a cambiar el estado, 
+   * con el valor del id de la tarea en la que se ha pulsado el botón.
+   */
   cambiarEstado(id: any) {
     this.idSeleccionado = id;
   }
 
+  /**
+   * Realiza el cambio del estado de la tarea.
+   */
   confirmarEstado() {
     const tareaId = this.idSeleccionado;
     const formData = new FormData();

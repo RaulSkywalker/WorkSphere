@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 
 class TareaController extends Controller
 {
+    /**
+     * Función encargada de agregar una nueva tarea a la base de datos.
+     */
     public function addTarea(Request $request)
     {
         $tarea = new Tarea;
@@ -20,6 +23,9 @@ class TareaController extends Controller
         return response()->json(['message' => 'Tarea creada exitosamente'], 201);
     }
 
+    /**
+     * Función que trae todas las tareas que se encuentran en la base de datos.
+     */
     public function getTareas()
     {
         $tareas = Tarea::all();
@@ -27,6 +33,9 @@ class TareaController extends Controller
         return response()->json($tareas);
     }
 
+    /**
+     * Función que trae todas las tareas asignadas a un empleado en concreto.
+     */
     public function getTareasByEmpleado($id_empleado)
     {
         $tareas = Tarea::where('id_empleado', $id_empleado)->get();
@@ -34,6 +43,9 @@ class TareaController extends Controller
         return response()->json($tareas);
     }
 
+    /**
+     * Función que trae una tarea según el id que se ha pasado por parámetro.
+     */
     public function getTareaById($id)
     {
         $tarea = Tarea::find($id);
@@ -45,6 +57,9 @@ class TareaController extends Controller
         return response()->json($tarea);
     }
 
+    /**
+     * Función que actualiza los datos de una tarea en la base de datos.
+     */
     public function updateTarea(Request $request, $id)
     {
         $tarea = Tarea::find($id);
@@ -63,6 +78,9 @@ class TareaController extends Controller
         return response()->json(['message' => 'Tarea actualizada exitosamente'], 200);
     }
 
+    /**
+     * Esta función actualiza el estado de una tarea.
+     */
     public function changeStatus(Request $request, $id)
     {
         $tarea = Tarea::find($id);
@@ -77,6 +95,9 @@ class TareaController extends Controller
         return response()->json(['message' => 'Tarea actualizada exitosamente'], 200);
     }
 
+    /**
+     * Función encargada de eliminar una tarea de la base de datos.
+     */
     public function deleteTarea($id)
     {
         $tarea = Tarea::find($id);

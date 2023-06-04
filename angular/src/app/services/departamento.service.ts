@@ -38,7 +38,7 @@ export class DepartamentoService {
   }
 
   /**
-   * Accede a la API para cambiar el gerente del departamento.
+   * Accede a la API para obtener todos los empleados pertenecientes a un departamento.
    * @param form 
    */
   public obtenerEmpleadosDepartamento(id: any) {

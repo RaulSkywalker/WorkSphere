@@ -1,6 +1,7 @@
 <div style="padding: 2%; display: flex; justify-content: center;">
   <div class="col-md-9">
-    <div class="card card-primary card-outline" style="width: 400px; border-radius: 15px; box-shadow: 9px 9px 4px black;">
+    <div class="card card-primary card-outline"
+      style="width: 400px; border-radius: 15px; box-shadow: 9px 9px 4px black;">
       <div class="card-header">
         <h3 class="card-title">DEPARTAMENTOS DE LA EMPRESA</h3>
       </div>
@@ -47,15 +48,16 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-  <p>{{ departamento.descripcion }}</p>
-  <div style="background-color: grey; padding: 10px; border-radius: 15px;">
-    <h6>Miembros del departamento:</h6>
-  <ul *ngIf="empleadosDelDepartamento && empleadosDelDepartamento.length > 0" style="list-style: none;">
-    <li *ngFor="let empleado of empleadosDelDepartamento">{{ empleado.nombre }} {{ empleado.apellido }}</li>
-  </ul>
-  <p *ngIf="!empleadosDelDepartamento || empleadosDelDepartamento.length === 0">No hay empleados en este departamento actualmente.</p>
-  </div>
-</div>
+        <p>{{ departamento.descripcion }}</p>
+        <div style="background-color: grey; padding: 10px; border-radius: 15px;">
+          <h6>Miembros del departamento:</h6>
+          <ul *ngIf="empleadosDelDepartamento && empleadosDelDepartamento.length > 0" style="list-style: none;">
+            <li *ngFor="let empleado of empleadosDelDepartamento">{{ empleado.nombre }} {{ empleado.apellido }}</li>
+          </ul>
+          <p *ngIf="!empleadosDelDepartamento || empleadosDelDepartamento.length === 0">No hay empleados en este
+            departamento actualmente.</p>
+        </div>
+      </div>
       <div class="modal-footer">
       </div>
     </div>

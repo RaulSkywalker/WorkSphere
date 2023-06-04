@@ -24,19 +24,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 /*Empleados*/
-Route::post('add', [EmpleadoController::class, 'anadirEmpleado']);
-Route::post('update', [EmpleadoController::class, 'modificarEmpleado']);
 Route::delete('delete', [EmpleadoController::class, 'eliminarEmpleado']);
 Route::post('show', [EmpleadoController::class, 'mostrarEmpleados']);
 Route::get('empleado/{id}', [EmpleadoController::class, 'getEmpleado']);
 Route::get('empleados', [EmpleadoController::class, 'mostrarEmpleados']);
 
 /*Departamentos*/
-Route::post('updateD', [DepartamentoController::class, 'editarDepartamento']);
 Route::post('getDs', [DepartamentoController::class, 'mostrarDepartamentos']);
 Route::get('departamentos', [DepartamentoController::class, 'mostrarDepartamentos']);
 Route::get('departamento/{id}', [DepartamentoController::class, 'getDepartamento']);
-Route::post('gerente', [DepartamentoController::class, 'asignarGerente']);
 Route::get('empleadosDep/{id}', [DepartamentoController::class, 'obtenerEmpleadosPorDepartamento']);
 
 /*Usuarios*/
