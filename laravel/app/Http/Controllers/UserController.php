@@ -36,12 +36,12 @@ class UserController extends Controller
         $user->role = 'empleado';
         $user->save();
 
-        $url = "http://localhost:8000/storage/";
         $file = $request->file('image');
         $extension = $file->getClientOriginalExtension();
-        $path = $request->file('image')->storeAs('userimages/', $user->id . '.' . $extension);
-        $user->image = $path;
-        $user->imgpath = $url . $path;
+        $fileName = $user->id . '.' . $extension;
+        $path = $request->file('image')->storeAs('userimages', $fileName);
+        $user->image = $fileName;
+        $user->imgpath = asset('storage/userimages/' . $fileName);
         $user->save();
 
         $empleado = new Empleado();
@@ -99,17 +99,19 @@ class UserController extends Controller
         if ($validator->fails()) {
             return response()->json(['Error' => $validator->errors()->all()], 404);
         }
+
         $user = User::find($request->id);
         $user->name = $request->name;
         $user->save();
 
         if ($request->hasFile('image')) {
-            $url = "http://localhost:8000/storage/";
             $file = $request->file('image');
             $extension = $file->getClientOriginalExtension();
-            $path = $request->file('image')->storeAs('userimages/', $user->id . '.' . $extension);
+            $fileName = $user->id . '.' . $extension;
+            $path = $file->storeAs('userimages', $fileName);
+
             $user->image = $path;
-            $user->imgpath = $url . $path;
+            $user->imgpath = asset('storage/userimages/' . $fileName);
             $user->save();
         }
 
@@ -197,9 +199,9 @@ class UserController extends Controller
             UserFriend::where('user_id', $user_id)
                 ->where('friend_id', $friend_id)
                 ->delete();
-            return response()->json(['message' => 'Friendship deleted successfully']);
+            return response()->json(['message' => 'Amistad eliminada correctamente']);
         } else {
-            return response()->json(['message' => 'Friendship not found'], 404);
+            return response()->json(['message' => 'Amistad no encontrada'], 404);
         }
     }
 }
