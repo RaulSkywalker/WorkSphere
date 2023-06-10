@@ -71,7 +71,6 @@ class TareaController extends Controller
         $tarea->titulo_tarea = $request->input('titulo_tarea');
         $tarea->descripcion_tarea = $request->input('descripcion_tarea');
         $tarea->fecha_vencim = $request->input('fecha_vencim');
-        $tarea->estado = $request->input('estado');
         $tarea->id_empleado = $request->input('id_empleado');
         $tarea->save();
 

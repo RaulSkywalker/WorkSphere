@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { empleadoModel } from 'src/app/models/empleado.model';
 import { EmpleadoService } from 'src/app/services/empleado.service';
@@ -27,7 +27,8 @@ export class InicioComponent implements OnInit {
     private tarSer: TareaService,
     private http: HttpClient,
     private fb: FormBuilder,
-    private empSer: EmpleadoService
+    private empSer: EmpleadoService,
+    private cdr: ChangeDetectorRef
   ) {
     this.addForm = this.fb.group({
       title: ['', Validators.required],
@@ -82,10 +83,10 @@ export class InicioComponent implements OnInit {
     this.tarSer.addTarea(formData).subscribe(() => {
       this.tarSer.getTareas().subscribe(
         (response) => {
-          this.tareas = response;
+          this.tareasFiltradas = response;
           this.tarSer.getTareas().subscribe(
             (response) => {
-              this.tareas = response;
+              this.tareasFiltradas = response;
             },
             (error) => {
               console.log(error);
@@ -159,14 +160,13 @@ export class InicioComponent implements OnInit {
       this.editForm.get('description')?.value
     );
     formData.append('fecha_vencim', this.editForm.get('fecha_vencim')?.value);
-    formData.append('estado', 'No comenzada');
     formData.append('id_empleado', this.editForm.get('id_empleado')?.value);
 
     this.tarSer.updateTarea(tareaId, formData).subscribe(
       (response) => {
         this.tarSer.getTareas().subscribe(
           (response) => {
-            this.tareas = response;
+            this.tareasFiltradas = response;
           },
           (error) => {
             console.log(error);
@@ -206,7 +206,7 @@ export class InicioComponent implements OnInit {
       () => {
         this.tarSer.getTareas().subscribe(
           (response) => {
-            this.tareas = response;
+            this.tareasFiltradas = response;
           },
           (error) => {
             console.log(error);
@@ -231,7 +231,7 @@ export class InicioComponent implements OnInit {
   }
 
   /**
-   * Método encargado de filtrar en la tabla, las tareas 
+   * Método encargado de filtrar en la tabla, las tareas
    * según lo que se ha escrito en la barra de búsqueda.
    */
   buscar() {

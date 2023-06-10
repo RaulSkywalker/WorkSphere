@@ -18,6 +18,7 @@
       <div *ngIf="loginForm.get('pass').errors['required']">La contraseña es requerida.</div>
     </div>
   </div>
+  <div *ngIf="loginError" style="color: red;">Email o contraseña incorrectos.</div>
 </form>
 <hr />
 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">

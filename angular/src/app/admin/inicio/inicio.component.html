@@ -26,7 +26,7 @@
         <tr *ngFor="let tarea of tareasFiltradas">
           <td>{{tarea.titulo_tarea}}</td>
           <td><span
-              [ngClass]="{'badge bg-dark': tarea.estado === 'No comenzada', 'badge bg-green': tarea.estado !== 'No comenzada'}">
+              [ngClass]="{'badge bg-red': tarea.estado === 'No comenzada', 'badge bg-green': tarea.estado !== 'No comenzada'}">
               {{tarea.estado}}
             </span></td>
           <td><span class="badge bg-gradient-indigo">{{tarea.fecha_vencim}}</span></td>

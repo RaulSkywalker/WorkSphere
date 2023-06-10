@@ -85,6 +85,11 @@ export class DregistrationComponent {
     }
   }
 
+  /**
+   * Valida que se es mayor de 18 años para poder unirse a la plataforma.
+   * @param control 
+   * @returns 
+   */
   validarEdadMinima(control: FormControl): { [key: string]: any } | null {
     const fechaNacimiento = new Date(control.value);
     const edadMinima = 18;
