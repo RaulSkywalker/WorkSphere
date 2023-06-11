@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
 import { userModel } from 'src/app/models/user.model';
 import { MensajeService } from 'src/app/services/mensaje.service';
 import { TareaService } from 'src/app/services/tarea.service';
 import { UserService } from 'src/app/services/user.service';
+
+
 
 @Component({
   selector: 'app-inicio',
@@ -33,6 +34,7 @@ export class InicioComponent implements OnInit {
   tamanioPag = 5;
   paginasTotales: any;
   tareas: any = [];
+  showModal: boolean = false;
 
   constructor(
     private userSer: UserService,
