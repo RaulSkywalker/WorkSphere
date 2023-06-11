@@ -19,6 +19,7 @@ export class InicioComponent implements OnInit {
   name: string = '';
   empleado: any = {};
   users: userModel[] = [];
+  usuariosPaginados: userModel[] = [];
   amigos: userModel[] = [];
   numAmigos: any;
   amigoIds: number[] = [];
@@ -204,7 +205,7 @@ export class InicioComponent implements OnInit {
   }
 
   /**
-   * Este método se encarga de generar el numero de páginas total para la lista de empleados.
+   * Este método se encarga de generar el numero de páginas total para la lista de usuarios.
    * @returns paginas
    */
   generarPaginacion() {
@@ -219,9 +220,9 @@ export class InicioComponent implements OnInit {
    * Método encargado de realizar la paginación para el listado de usuarios.
    */
   paginarUsuarios(): void {
-    const inicio = (this.paginaActual - 1) * this.tamanioPag;
-    const fin = inicio + this.tamanioPag;
-    this.users = this.users.slice(inicio, fin);
+    const inicio = (this.paginaActual - 1) * 5;
+    const fin = inicio + 5;
+    this.usuariosPaginados = this.users.slice(inicio, fin);
   }
 
   /**

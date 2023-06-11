@@ -11,3 +11,7 @@ hr {
   height: 1px;
   background-color: black;
 }
+
+main {
+  background-color: gray;
+}

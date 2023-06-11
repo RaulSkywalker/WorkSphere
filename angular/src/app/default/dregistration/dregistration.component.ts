@@ -72,6 +72,7 @@ export class DregistrationComponent {
         formdata.append('image', this.selectedImage);
         this.userSer.register(formdata).subscribe((res) => {
           toastr.success('Registrado con éxito');
+          this.registerForm.reset();
           document.getElementById('RegisterModal')?.classList.remove('show');
           document.body.classList.remove('modal-open');
           document.body.style.removeProperty('padding-right');

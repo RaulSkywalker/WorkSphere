@@ -18,6 +18,7 @@ export class EmpleadosComponent implements OnInit {
   private baseUrl = 'http://localhost:8000/api/';
   id: any;
   empleados: empleadoModel[] = [];
+  empleadosPaginados: empleadoModel[] = [];
   departamentos: departamentoModel[] = [];
   idEliminar: any;
   empleadoModificando: empleadoModel = new empleadoModel();
@@ -238,9 +239,9 @@ export class EmpleadosComponent implements OnInit {
    * Método encargado de realizar la paginación para el listado de empleados.
    */
   paginarEmpleados(): void {
-    const inicio = (this.paginaActual - 1) * this.tamanioPag;
-    const fin = inicio + this.tamanioPag;
-    this.empleados = this.empleados.slice(inicio, fin);
+    const inicio = (this.paginaActual - 1) * 5;
+    const fin = inicio + 5;
+    this.empleadosPaginados = this.empleados.slice(inicio, fin);
   }
 
   /**

@@ -52,7 +52,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let user of users">
+              <tr *ngFor="let user of usuariosPaginados">
                 <td>{{ user.name }}</td>
                 <td>
                   <button type="button" (click)="entablarAmistad(id, user.id, user.name)" class="btn btn-default btn-sm"

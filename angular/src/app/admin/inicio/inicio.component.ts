@@ -17,9 +17,6 @@ export class InicioComponent implements OnInit {
   editForm: FormGroup;
   empleados: empleadoModel[] = [];
   idSeleccionado: any;
-  paginaActual = 1;
-  tamanioPag = 5;
-  paginasTotales: any;
   busqueda: string = '';
   tareasFiltradas: any[] = [];
 
@@ -56,10 +53,6 @@ export class InicioComponent implements OnInit {
       (response) => {
         this.tareas = response;
         this.tareasFiltradas = this.tareas;
-        this.paginasTotales = Math.ceil(
-          this.tareasFiltradas.length / this.tamanioPag
-        );
-        this.paginarTareas();
       },
       (error) => {
         console.log(error);
@@ -242,35 +235,5 @@ export class InicioComponent implements OnInit {
     } else {
       this.tareasFiltradas = this.tareas;
     }
-  }
-
-  /**
-   * Este método se encarga de generar el numero de páginas total para la lista de empleados.
-   * @returns paginas
-   */
-  generarPaginacion() {
-    const paginas = [];
-    for (let i = 1; i <= this.paginasTotales; i++) {
-      paginas.push(i);
-    }
-    return paginas;
-  }
-
-  /**
-   * Método encargado de realizar la paginación para el listado de empleados.
-   */
-  paginarTareas(): void {
-    const inicio = (this.paginaActual - 1) * this.tamanioPag;
-    const fin = inicio + this.tamanioPag;
-    this.tareas = this.tareas.slice(inicio, fin);
-  }
-
-  /**
-   * Método encargado de cambiar de página, y volver a paginar.
-   * @param numPagina
-   */
-  onCambioPagina(numPagina: number): void {
-    this.paginaActual = numPagina;
-    this.paginarTareas();
   }
 }
