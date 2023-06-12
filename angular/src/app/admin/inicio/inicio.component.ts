@@ -80,6 +80,7 @@ export class InicioComponent implements OnInit {
           this.tarSer.getTareas().subscribe(
             (response) => {
               this.tareasFiltradas = response;
+              this.addForm.reset();
             },
             (error) => {
               console.log(error);

@@ -10,7 +10,7 @@
         <span class="info-box-icon"><i class="fab fa-elementor"></i></span>
 
         <div class="info-box-content">
-          <span class="info-box-text text-center" style="font-size: xx-large">{{
+          <span class="info-box-text text-center" style="font-size: x-large">{{
             empleado.nombre_dep
             }}</span>
         </div>
@@ -97,14 +97,14 @@
             <table class="table m-0">
               <thead>
                 <tr>
-                  <th>Título</th>
-                  <th>Estado</th>
+                  <th class="col-6">Título</th>
+                  <th class="col-6">Estado</th>
                   <th>Fecha vencimiento</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let tarea of tareas.slice(tareas.length - 3)">
-                  <td>{{tarea.titulo_tarea}}</td>
+                  <td style="font-size: small;">{{tarea.titulo_tarea}}</td>
                   <td><span
                       [ngClass]="{'badge bg-dark': tarea.estado === 'No comenzada', 'badge bg-green': tarea.estado !== 'No comenzada'}">
                       {{tarea.estado}}
